@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 1 - CS180</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            margin: 20px;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .image-grid img {
+            width: 100%;
+            height: auto;
+        }
+        .image-grid figcaption {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project 1: Colorizing the Prokudin-Gorskii photo collection</h1>
+    <h2>Overview</h2>
+    <hr width="100%" size="2">
+    <p>Sergei Mikhailovich Prokudin-Gorskii (1863-1944) was ahead of his time! With his dream of capturing the world in color, he won Tzar's special permission to travel across the Russian Empire and take color photographs of everything he saw. His idea was simple: record three exposures of every scene onto a glass plate using a red, a green, and a blue filter. His RGB glass plate negatives survived beyond the Russian empire, and were purchased in 1948 by the Library of Congress. The LoC has recently digitized the negatives and made them available <a href="https://www.loc.gov/collections/prokudin-gorskii/">online</a>.</p>
+    <p>In this project, my aim was to take the digitized Prokudin-Gorskii glass plate images as input and automatically produce a color image with as few visual artifacts as possible. For each image, the three color channel images were extracted, aligned, and placed on top of each other to form a single RGB color image.</p>
+    <h2>Approach</h2>
+    <hr width="100%" size="2">
+    <h3>Exhaustive Search (aka Window Search)</h3>
+    <p>[Add project-specific details here]</p>
+    
+    <h3>Constructing an Image Pyramid</h3>
+    <p>Talk about the general initial structure</p>
+
+    <p>Parellelizing the code using ThreadPoolExecutor to take runtime down from &<&2 minutes to &<&30 seconds. Parellelized the exhaustive search function, because even though it searched over a 30x30 window [-15, 15], it still took too long for the last recursive calls where the size was close to the original.</p>
+    
+    <h3>Bells and Whistles</h3>
+    <p>SSIM: </p>
+    
+    <h2>Results</h2>
+    <hr width="100%" size="2">
+    <div class="image-grid">
+        <figure>
+            <img src="data/imgs/cathedral.jpg" alt="Image 1">
+            <figcaption>cathedral.jpg<br>R: (12, 3), G: (5, 2)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/church.jpg" alt="Image 2">
+            <figcaption>church.jpg<br>R: (58, -4), G: (25, 4)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/emir.jpg" alt="Image 3">
+            <figcaption>emir.jpg<br>R: (0, -405), G: (49, 24)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/harvesters.jpg" alt="Image 4">
+            <figcaption>harvesters.jpg<br>R: (127, 14), G: (59, 17)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/icon.jpg" alt="Image 5">
+            <figcaption>icon.jpg<br>R: (89, 23), G: (41, 17)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/lady.jpg" alt="Image 6">
+            <figcaption>lady.jpg<br>R: (117, 11), G: (52, 8)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/melons.jpg" alt="Image 7">
+            <figcaption>melons.jpg<br>R: (191, 13), G: (81, 10)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/monastery.jpg" alt="Image 8">
+            <figcaption>monastery.jpg<br>R: (3, 2), G: (-3, 2)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/onion_church.jpg" alt="Image 9">
+            <figcaption>onion_church.jpg<br>R: (113, 36), G: (51, 27)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/sculpture.jpg" alt="Image 10">
+            <figcaption>sculpture.jpg<br>R: (147, -26), G: (33, -11)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/self_portrait.jpg" alt="Image 11">
+            <figcaption>self_portrait.jpg<br>R: (191, 38), G: (78, 29)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/three_generations.jpg" alt="Image 12">
+            <figcaption>three_generations.jpg<br>R: (113, 11), G: (52, 13)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/tobolsk.jpg" alt="Image 13">
+            <figcaption>tobolsk.jpg<br>R: (6, 3), G: (3, 3)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/train.jpg" alt="Image 14">
+            <figcaption>train.jpg<br>R: (87, 32), G: (42, 6)</figcaption>
+        </figure>
+    </div>
+
+    <h2>Additional Examples</h2>
+    <hr width="100%" size="2">
+    <div class="image-grid">
+        <figure>
+            <img src="data/imgs/canal.jpg" alt="Image 1">
+            <figcaption>canal.jpg<br>R: (47, 48), G: (28, 24)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/flower_bush.jpg" alt="Image 2">
+            <figcaption>flower_bush.jpg<br>R: (97, -24), G: (49, -6)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/flower_field.jpg" alt="Image 3">
+            <figcaption>flower_field.jpg<br>R: (60, 13), G: (8, 8)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/forest_path.jpg" alt="Image 4">
+            <figcaption>forest_path.jpg<br>R: (129, 41), G: (56, 21)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/lady_thinking.jpg" alt="Image 5">
+            <figcaption>lady_thinking.jpg<br>R: (76, 35), G: (38, 21)</figcaption>
+        </figure>
+        <figure>
+            <img src="data/imgs/lugano.jpg" alt="Image 6">
+            <figcaption>lugano.jpg<br>R: (93, -29), G: (41, -16)</figcaption>
+        </figure>
+
+    <p>[Add project-specific details here]</p>
+</body>
+</html>
