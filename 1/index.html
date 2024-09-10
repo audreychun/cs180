@@ -27,14 +27,16 @@
 </head>
 <body>
     <h1>Project 1: Colorizing the Prokudin-Gorskii photo collection</h1>
+    <hr width="100%" size="2">
     <h2>Overview</h2>
+    <p>Sergei Mikhailovich Prokudin-Gorskii (1863-1944) was quite ahead of his time! With his dream of capturing the world in color, he won Tzar's special permission to travel across the Russian Empire and take color photographs of everything he saw. His idea was simple: record three exposures of every scene onto a glass plate using a red, a green, and a blue filter. His RGB glass plate negatives survived beyond the Russian empire, and were purchased in 1948 by the Library of Congress. The LoC has recently digitized the negatives and made them available <a href="https://www.loc.gov/collections/prokudin-gorskii/">online</a>.</p>
+    <p>In this project, my aim was to take the digitized Prokudin-Gorskii glass plate images as input and automatically produce a color image with as few visual artifacts as possible. In summary, the three color channel images were extracted, aligned, and placed on top of each other to form a single RGB color image.</p>
     <hr width="100%" size="2">
-    <p>Sergei Mikhailovich Prokudin-Gorskii (1863-1944) was ahead of his time! With his dream of capturing the world in color, he won Tzar's special permission to travel across the Russian Empire and take color photographs of everything he saw. His idea was simple: record three exposures of every scene onto a glass plate using a red, a green, and a blue filter. His RGB glass plate negatives survived beyond the Russian empire, and were purchased in 1948 by the Library of Congress. The LoC has recently digitized the negatives and made them available <a href="https://www.loc.gov/collections/prokudin-gorskii/">online</a>.</p>
-    <p>In this project, my aim was to take the digitized Prokudin-Gorskii glass plate images as input and automatically produce a color image with as few visual artifacts as possible. For each image, the three color channel images were extracted, aligned, and placed on top of each other to form a single RGB color image.</p>
     <h2>Approach</h2>
-    <hr width="100%" size="2">
     <h3>Exhaustive Search (aka Window Search)</h3>
-    <p>[Add project-specific details here]</p>
+    <p>First, I separated the 3 RGB color channels by dividing the original image into three equal parts along its height axis. Next, I cropped the image by 15% on each side as to avoid issues caused by the border throwing off image similarity metrics. </p>
+    <p>The exhaustive search was implemented by naively searching over a 30x30 window, shifting the image to be aligned (G or R) from [-15, 15] on both width and height. At each shift, the image to be aligned was compared with the reference image (B) and evaluated by an image comparison metric. Metrics tested were MSE (Mean Squared Error), NCC (Normalized Cross Correlation), and SSIM (Structural Similarity Index Measure). I found NCC to be the most efficient as well as relatively accurate. </p>
+    <p>For larger images, exhaustive search (even on the same 30x30 window size) becomes quite slow. I parallelized the exhaustive search function using ThreadPoolExecutor, which distributes the work of calculating NCC for different pixel shifts across multiple CPU cores (instead of just one). This allows multiple computations to run simultaneously instead of sequentially, so it's much faster! This reduced runtime with the image pyramid from 2 minutes &plusmn; 5 seconds to 30 seconds &plusmn; 2 seconds for all images. Speaking of the image pyramid, let's go to the next section. &#9786; </p>
     
     <h3>Constructing an Image Pyramid</h3>
     <p>Talk about the general initial structure</p>
@@ -44,8 +46,8 @@
     <h3>Bells and Whistles</h3>
     <p>SSIM: </p>
     
-    <h2>Results</h2>
     <hr width="100%" size="2">
+    <h2>Results</h2>
     <div class="image-grid">
         <figure>
             <img src="imgs/cathedral.jpg" alt="Image 1">
@@ -104,9 +106,10 @@
             <figcaption>train.jpg<br>R: (87, 32), G: (42, 6)</figcaption>
         </figure>
     </div>
+    <p>All images looked beautifully colored and relatively clear, except for Emir. A potential issue with him is that his blue coat shows up as pixels equal or close to 1 in the blue channel image, but much less light/information is captured in the green and red channel images. This can throw off NCC as it is based off of the RGB color channel matchin - a metric like SSIM that doesn't depend on this could have better performance.</p>
 
-    <h2>Additional Examples</h2>
     <hr width="100%" size="2">
+    <h2>Additional Examples</h2>
     <div class="image-grid">
         <figure>
             <img src="imgs/canal.jpg" alt="Image 1">
@@ -132,7 +135,5 @@
             <img src="imgs/lugano.jpg" alt="Image 6">
             <figcaption>lugano.jpg<br>R: (93, -29), G: (41, -16)</figcaption>
         </figure>
-
-    <p>[Add project-specific details here]</p>
 </body>
 </html>
