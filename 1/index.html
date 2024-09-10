@@ -35,13 +35,14 @@
     <h2>Approach</h2>
     <h3>Exhaustive Search (aka Window Search)</h3>
     <p>First, I separated the 3 RGB color channels by dividing the original image into three equal parts along its height axis. Next, I cropped the image by 15% on each side as to avoid issues caused by the border throwing off image similarity metrics. </p>
-    <p>The exhaustive search was implemented by naively searching over a 30x30 window, shifting the image to be aligned (G or R) from [-15, 15] on both width and height. At each shift, the image to be aligned was compared with the reference image (B) and evaluated by an image comparison metric. Metrics tested were MSE (Mean Squared Error), NCC (Normalized Cross Correlation), and SSIM (Structural Similarity Index Measure). I found NCC to be the most efficient as well as relatively accurate. </p>
+    <p>The exhaustive search was implemented by naively searching over a 30x30 window, shifting the image to be aligned (G or R) from [-15, 15] on both width and height. At each shift, the image to be aligned was compared with the reference image (B) and evaluated by an image comparison metric. Metrics that I tested were MSE (Mean Squared Error), NCC (Normalized Cross Correlation), and SSIM (Structural Similarity Index Measure). I found NCC to be the most efficient as well as relatively accurate. </p>
     <p>For larger images, exhaustive search (even on the same 30x30 window size) becomes quite slow. I parallelized the exhaustive search function using ThreadPoolExecutor, which distributes the work of calculating NCC for different pixel shifts across multiple CPU cores (instead of just one). This allows multiple computations to run simultaneously instead of sequentially, so it's much faster! This reduced runtime with the image pyramid from 2 minutes &plusmn; 5 seconds to 30 seconds &plusmn; 2 seconds for all images. Speaking of the image pyramid, let's go to the next section. &#9786; </p>
     
     <h3>Constructing an Image Pyramid</h3>
-    <p>Talk about the general initial structure</p>
 
-    <p>Parellelizing the code using ThreadPoolExecutor to take runtime down from &<&2 minutes to &<&30 seconds. Parellelized the exhaustive search function, because even though it searched over a 30x30 window [-15, 15], it still took too long for the last recursive calls where the size was close to the original.</p>
+    <p>For high-resolution glass plate scans, exhaustive search will become prohibitively expensive since the pixel displacement is too large. An image pyramid is an alternative, faster search procedure. The pyramid represents the input image at multiple scales (I scaled by a factor of 2) and sequentially performs exhaustive search by starting from the coarsest scale (smallest image) and going down the pyramid, updating the estimate as you go.</p>
+
+    <p>In short, the image pyramid progressively refines the displacement at different image scales. It first downsamples the two images by half the resolution and recursively searches for the displacement at the lower resolution. Once the best displacement is found at the lowest resolution, it scales the displacement back up and refines the alignment at the original resolution using exhaustive search (parallelized version). This is way more efficient because it narrows down the search space at each level!</p>
     
     <h3>Bells and Whistles</h3>
     <p>SSIM: </p>
@@ -106,7 +107,7 @@
             <figcaption>train.jpg<br>R: (87, 32), G: (42, 6)</figcaption>
         </figure>
     </div>
-    <p>All images looked beautifully colored and relatively clear, except for Emir. A potential issue with him is that his blue coat shows up as pixels equal or close to 1 in the blue channel image, but much less light/information is captured in the green and red channel images. This can throw off NCC as it is based off of the RGB color channel matchin - a metric like SSIM that doesn't depend on this could have better performance.</p>
+    <p>All images looked beautifully colored and relatively clear, except for Emir. A potential issue with him is that his blue coat shows up as pixels equal or close to 1 in the blue channel image, but much less light/information is captured in the green and red channel images. This can throw off NCC as it is based off of the RGB color channel matching - a metric like SSIM that doesn't depend on this could have better performance.</p>
 
     <hr width="100%" size="2">
     <h2>Additional Examples</h2>
