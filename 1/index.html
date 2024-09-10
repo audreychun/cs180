@@ -45,7 +45,8 @@
     <p>In short, the image pyramid progressively refines the displacement at different image scales. It first downsamples the two images by half the resolution and recursively searches for the displacement at the lower resolution. Once the best displacement is found at the lowest resolution, it scales the displacement back up and refines the alignment at the original resolution using exhaustive search (parallelized version). This is way more efficient because it narrows down the search space at each level!</p>
     
     <h3>Bells and Whistles</h3>
-    <p>SSIM: </p>
+    <p>SSIM Implementation from scratch.</p>
+    <p>Sources: <a href="https://en.wikipedia.org/wiki/Structural_similarity_index_measure#Algorithm">Source 1</a>, <a href="https://www.ni.com/docs/en-US/bundle/ni-vision-concepts-help/page/structural_similarity_index.html?srsltid=AfmBOopRR07TjZSiso-VrNL67Piv7twwCg5dybxT2gWv3QF0ZNbjK_nS">Source 1</a></p>
     
     <hr width="100%" size="2">
     <h2>Results</h2>
