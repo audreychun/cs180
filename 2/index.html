@@ -35,6 +35,12 @@
             max-width: 30%; /* Adjusts the size of images */
             height: auto;   /* Keeps the aspect ratio */
         }
+        .image-container figcaption {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -101,6 +107,7 @@
         <figcaption>Sharpened</figcaption>y</figcaption>
     </div>
     <p>The wine is looking nice and sharp! But Coh could use some adjustment on how much of her high frequencies we're adding.</p>
+    <hr width="100%" size="2">
     <h3>Hybrid Images</h3>
     <p>In this part, I attempted to create hybrid images using the approach described in the SIGGRAPH 2006 paper by Oliva, Torralba, and Schyns. By blending the high frequency portion of one image with the low-frequency portion of another, you can get a hybrid image that leads to different interpretations at different distances!</p>
     <p>Let's blend Derek and his cat Nutmeg by taking the low frequencies of Derek and the high frequencies of Nutmeg.</p>
@@ -131,6 +138,21 @@
         <img src="imgs/freq_specs/im2_low.png" alt="Image 1">
         <img src="imgs/freq_specs/hybrid.png" alt="Image 1">
     </div>
-
+<hr width="100%" size="2">
+<h2>Multi-resolution Blending and the Oraple journey</h2>
+<h3>Gaussian and Laplacian Stacks</h3>
+    <p>Apple Gaussian stack, Apple Laplacian stack, Orange Gaussian stack, Orange Laplacian stack</p>
+    <img src="imgs/stacks/apple_gauss.png" alt="Image 1">
+    <img src="imgs/stacks/apple_lapl.png" alt="Image 1">
+    <img src="imgs/stacks/orange_gauss.png" alt="Image 1">
+    <img src="imgs/stacks/orange_lapl.png" alt="Image 1">
+    <p>Let's make an Oraple. Here's my Figure 3.4.2 </p>
+    <img src="imgs/fig342.png" alt="Image 1">
+    <img src="imgs/stacks/apple_gauss.png" alt="Image 1">
+<p>Still hungry, so here's pasta and soup combined.</p>
+    <img src="imgs/stacks/apple_gauss.png" alt="Image 1">
+    <img src="imgs/stacks/apple_lapl.png" alt="Image 1">
+    <img src="imgs/stacks/orange_gauss.png" alt="Image 1">
+    <img src="imgs/stacks/orange_lapl.png" alt="Image 1">
 </body>
 </html>
