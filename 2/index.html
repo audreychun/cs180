@@ -67,11 +67,70 @@
         <figcaption>DoG of y</figcaption>
     </div>
     <p>I can do the same thing with a single convolution instead of two, just by creating a derivative of gaussian filters. <b>This gives the exact same result as before! MSE of both images compared to their previous counterparts is &lt;0.005.</b></p>
-    <p>For larger images, exhaustive search (even on the same 30x30 window size) becomes quite slow. I parallelized the exhaustive search function using ThreadPoolExecutor, which distributes the work of calculating NCC for different pixel shifts across multiple CPU cores (instead of just one). This allows multiple computations to run simultaneously instead of sequentially, so it's much faster! This reduced runtime with the image pyramid from 2 minutes &plusmn; 5 seconds to 30 seconds &plusmn; 2 seconds for all images. Speaking of the image pyramid, let's go to the next section. &#9786; </p>
-    
-    <h3>Constructing an Image Pyramid</h3>
 
-    <p>For high-resolution glass plate scans, exhaustive search will become prohibitively expensive since the pixel displacement is too large. An image pyramid is an alternative, faster search procedure. The pyramid represents the input image at multiple scales (I scaled by a factor of 2) and sequentially performs exhaustive search by starting from the coarsest scale (smallest image) and going down the pyramid, updating the estimate as you go.</p>
+    <hr width="100%" size="2">
+    <h2>Part 2: Fun with Frequencies</h2>
+    <h3>Image "Sharpening"</h3>
+    <p>In this part, I derived the unsharp masking technique. We can subtract the blurred version of an image from the original to get the high frequencies of the image. An image often looks sharper if it has stronger high frequencies! See this example with the beautiful Taj Mahal: </p>
+    <div class="image-container">
+        <img src="imgs/taj.jpg" alt="Image 1">
+        <figcaption>Original image</figcaption>
+        <img src="imgs/taj_blur.png" alt="Image 2">
+        <figcaption>Blurred</figcaption>y</figcaption>
+        <img src="imgs/taj_high_freq" alt="Image 3">
+        <figcaption>Original - Blurred = High Frequencies</figcaption>
+        <img src="imgs/taj_sharpened.png" alt="Image 2">
+        <figcaption>Original + High Frequencies = Sharpened</figcaption>y</figcaption>
+    </div>
+    <p>Nice. For evaluation, let's blur and then sharpen this picture I snapped with my camera at Napa Valley:</p>
+    <div class="image-container">
+        <img src="imgs/wine.jpg" alt="Image 1">
+        <figcaption>Original image</figcaption>
+        <img src="imgs/blurry_wine.png" alt="Image 2">
+        <figcaption>Blurred</figcaption>y</figcaption>
+        <img src="imgs/sharpened_wine.png" alt="Image 2">
+        <figcaption>Sharpened</figcaption>y</figcaption>
+    </div>
+        <p>And another one with my roommate, Coh, who came to Napa with me:</p>
+    <div class="image-container">
+        <img src="imgs/coh_small.jpg" alt="Image 1">
+        <figcaption>Original image</figcaption>
+        <img src="imgs/blurry_coh.png" alt="Image 2">
+        <figcaption>Blurred</figcaption>y</figcaption>
+        <img src="imgs/sharpened_coh.png" alt="Image 2">
+        <figcaption>Sharpened</figcaption>y</figcaption>
+    </div>
+    <p>The wine is looking nice and sharp! But Coh could use some adjustment on how much of her high frequencies we're adding.</p>
+    <h3>Hybrid Images</h3>
+    <p>In this part, I attempted to create hybrid images using the approach described in the SIGGRAPH 2006 paper by Oliva, Torralba, and Schyns. By blending the high frequency portion of one image with the low-frequency portion of another, you can get a hybrid image that leads to different interpretations at different distances!</p>
+    <p>Let's blend Derek and his cat Nutmeg by taking the low frequencies of Derek and the high frequencies of Nutmeg.</p>
+    <div class="image-container">
+        <img src="imgs/DerekPicture.jpg" alt="Image 1">
+        <figcaption>Derek</figcaption>
+        <img src="imgs/nutmeg.jpg" alt="Image 2">
+        <figcaption>Nutmeg</figcaption>y</figcaption>
+        <img src="imgs/derekcat.png" alt="Image 2">
+        <figcaption>Derek + Nutmeg = Dermeg</figcaption>y</figcaption>
+    </div>
+    <p>I'm feeling hungry, so let's turn my roommate Coh from earlier into a ear of corn.</p>
+    <div class="image-container">
+        <img src="imgs/coh_small.jpg" alt="Image 1">
+        <figcaption>Coh</figcaption>
+        <img src="imgs/corn_small.jpg" alt="Image 2">
+        <figcaption>Corn</figcaption>y</figcaption>
+        <img src="imgs/cohcorn.png" alt="Image 2">
+        <figcaption>Coh + Corn = Cohrn</figcaption>y</figcaption>
+    </div>
+    <p>For Cohrn, we can illustrate the process through frequency analysis. Shown here is the log magnitude of the Fourier transform of the two input images, the filtered images, and the hybrid image.</p>
+    <div class="image-container">
+        <img src="imgs/freq_specs/im1.png" alt="Image 1">
+        <figcaption>Input 1</figcaption>
+        <img src="imgs/freq_specs/im2.png" alt="Image 1">
+        <figcaption>Input 2</figcaption>
+        <img src="imgs/freq_specs/im2_high.png" alt="Image 1">
+        <img src="imgs/freq_specs/im2_low.png" alt="Image 1">
+        <img src="imgs/freq_specs/hybrid.png" alt="Image 1">
+    </div>
 
 </body>
 </html>
