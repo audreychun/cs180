@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 2 - CS180</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            margin: 20px;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .image-grid img {
+            width: 100%;
+            height: auto;
+        }
+        .image-grid figcaption {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project 2: Fun with Filters and Frequencies</h1>
+    <hr width="100%" size="2">
+    <h2>Overview</h2>
+    <p>In this project, I played around with 2D convolutions and filtering. This included using frequencies in different ways to blur, sharpen, and combine images, as well as implementing Gaussian and Laplacian stacks. Enjoy!</p>
+    <hr width="100%" size="2">
+    <h2>Part 1: Fun with Filters</h2>
+    <h3>Finite Difference Operator</h3>
+    <p>First, let's look at this cameraman image.</p>
+    <figure>
+        <img src="imgs/cameraman.png" alt="cameraman">
+    </figure>
+    <p>The exhaustive search was implemented by naively searching over a 30x30 window, shifting the image to be aligned (G or R) from [-15, 15] on both width and height. At each shift, the image to be aligned was compared with the reference image (B) and evaluated by an image comparison metric. Metrics that I tested were MSE (Mean Squared Error), NCC (Normalized Cross Correlation), and SSIM (Structural Similarity Index Measure). I found NCC to be the most efficient as well as relatively accurate. </p>
+    <p>For larger images, exhaustive search (even on the same 30x30 window size) becomes quite slow. I parallelized the exhaustive search function using ThreadPoolExecutor, which distributes the work of calculating NCC for different pixel shifts across multiple CPU cores (instead of just one). This allows multiple computations to run simultaneously instead of sequentially, so it's much faster! This reduced runtime with the image pyramid from 2 minutes &plusmn; 5 seconds to 30 seconds &plusmn; 2 seconds for all images. Speaking of the image pyramid, let's go to the next section. &#9786; </p>
+    
+    <h3>Constructing an Image Pyramid</h3>
+
+    <p>For high-resolution glass plate scans, exhaustive search will become prohibitively expensive since the pixel displacement is too large. An image pyramid is an alternative, faster search procedure. The pyramid represents the input image at multiple scales (I scaled by a factor of 2) and sequentially performs exhaustive search by starting from the coarsest scale (smallest image) and going down the pyramid, updating the estimate as you go.</p>
+
+</body>
+</html>
