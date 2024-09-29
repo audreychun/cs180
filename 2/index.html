@@ -24,6 +24,18 @@
             line-height: 1.5;
         }
     </style>
+    <style>
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px; /* Space between images */
+        }
+        .image-container img {
+            max-width: 30%; /* Adjusts the size of images */
+            height: auto;   /* Keeps the aspect ratio */
+        }
+    </style>
 </head>
 <body>
     <h1>Project 2: Fun with Filters and Frequencies</h1>
@@ -37,7 +49,24 @@
     <figure>
         <img src="imgs/cameraman.png" alt="cameraman">
     </figure>
-    <p>The exhaustive search was implemented by naively searching over a 30x30 window, shifting the image to be aligned (G or R) from [-15, 15] on both width and height. At each shift, the image to be aligned was compared with the reference image (B) and evaluated by an image comparison metric. Metrics that I tested were MSE (Mean Squared Error), NCC (Normalized Cross Correlation), and SSIM (Structural Similarity Index Measure). I found NCC to be the most efficient as well as relatively accurate. </p>
+    <p>We can show the partial derivative in x and y of him by convolving the image with finite difference operators D_x and D_y. On the right, the binarized gradient magnitude image is shown.</p>
+    <div class="image-container">
+        <img src="imgs/cameraman_dx.png" alt="Image 1">
+        <figcaption>Dx</figcaption>
+        <img src="imgs/cameraman_dy.png" alt="Image 2">
+        <figcaption>Dy</figcaption>
+        <img src="imgs/cameraman_magnitude.png" alt="Image 3">
+        <figcaption>Binarized Gradient Magnitude</figcaption>
+    </div>
+    <h3>Derivative of Gaussian (DoG) Filter</h3>
+     <p>Here, I created a blurred version of the original cameraman image by convolving with a gaussian. The procedure in the previous part was repeated, but <b>now I can see an improved difference in the smoothness and thickness of the edges.</b></p>
+    <div class="image-container">
+        <img src="imgs/cameraman_DoG_x.png" alt="Image 1">
+        <figcaption>DoG of x</figcaption>
+        <img src="imgs/cameraman_DoG_y.png" alt="Image 2">
+        <figcaption>DoG of y</figcaption>
+    </div>
+    <p>I can do the same thing with a single convolution instead of two, just by creating a derivative of gaussian filters. <b>This gives the exact same result as before! MSE of both images compared to their previous counterparts is &lt;0.005.</b></p>
     <p>For larger images, exhaustive search (even on the same 30x30 window size) becomes quite slow. I parallelized the exhaustive search function using ThreadPoolExecutor, which distributes the work of calculating NCC for different pixel shifts across multiple CPU cores (instead of just one). This allows multiple computations to run simultaneously instead of sequentially, so it's much faster! This reduced runtime with the image pyramid from 2 minutes &plusmn; 5 seconds to 30 seconds &plusmn; 2 seconds for all images. Speaking of the image pyramid, let's go to the next section. &#9786; </p>
     
     <h3>Constructing an Image Pyramid</h3>
