@@ -26,17 +26,20 @@
     </style>
     <style>
         .image-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px; /* Space between images */
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 20px; /* Space between images */
+        }
+        .image-container figure {
+            text-align: center;
+            max-width: 30%; /* Adjust this value to control image size */
         }
         .image-container img {
-            max-width: 30%; /* Adjusts the size of images */
-            height: auto;   /* Keeps the aspect ratio */
+            width: 100%; /* Make image fill the figure's width */
+            height: auto; /* Maintain aspect ratio */
         }
         .image-container figcaption {
-            text-align: center;
             font-size: 14px;
             margin-top: 5px;
             line-height: 1.5;
@@ -79,14 +82,22 @@
     <h3>Image "Sharpening"</h3>
     <p>In this part, I derived the unsharp masking technique. We can subtract the blurred version of an image from the original to get the high frequencies of the image. An image often looks sharper if it has stronger high frequencies! See this example with the beautiful Taj Mahal: </p>
     <div class="image-container">
-        <img src="imgs/taj.jpg" alt="Image 1">
-        <figcaption>Original image</figcaption>
-        <img src="imgs/taj_blur.png" alt="Image 2">
-        <figcaption>Blurred</figcaption>y</figcaption>
-        <img src="imgs/taj_high_freq" alt="Image 3">
-        <figcaption>Original - Blurred = High Frequencies</figcaption>
-        <img src="imgs/taj_sharpened.png" alt="Image 2">
-        <figcaption>Original + High Frequencies = Sharpened</figcaption>y</figcaption>
+        <figure>
+            <img src="imgs/taj.jpg" alt="Image 1">
+            <figcaption>Original image</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/taj_blur.png" alt="Image 2">
+            <figcaption>Blurred</figcaption>y</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/taj_high_freq" alt="Image 3">
+            <figcaption>Original - Blurred = High Frequencies</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/taj_sharpened.png" alt="Image 2">
+            <figcaption>Original + High Frequencies = Sharpened</figcaption>y</figcaption>
+        </figure>
     </div>
     <p>Nice. For evaluation, let's blur and then sharpen this picture I snapped with my camera at Napa Valley:</p>
     <div class="image-container">
