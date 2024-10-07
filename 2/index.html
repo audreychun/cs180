@@ -11,6 +11,10 @@
             width: 33.33%; 
             height: auto; 
         }
+        .full-width {
+            width: 100%;  
+            height: auto;
+        }
         .image-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -30,7 +34,7 @@
     </style>
 </head>
 <body>
-    <h1>Project 2: Fun with Filters and Frequencies test </h1>
+    <h1>Project 2: Fun with Filters and Frequencies</h1>
     <hr width="100%" size="2">
     <h2>Overview</h2>
     <p>In this project, I played around with 2D convolutions and filtering. This included using frequencies in different ways to blur, sharpen, and combine images, as well as implementing Gaussian and Laplacian stacks. Enjoy!</p>
@@ -179,24 +183,24 @@
             <figcaption>Fourier transform of hybrid image</figcaption>
         </figure>
     </div>
-<!--
 <hr width="100%" size="2">
 <h2>Multi-resolution Blending and the Oraple journey</h2>
 <h3>Gaussian and Laplacian Stacks</h3>
-    <p>Apple Gaussian stack, Apple Laplacian stack, Orange Gaussian stack, Orange Laplacian stack</p>
-    <img src="imgs/stacks/apple_gauss.png" alt="Image 1">
-    <img src="imgs/stacks/apple_lapl.png" alt="Image 1">
-    <img src="imgs/stacks/orange_gauss.png" alt="Image 1">
-    <img src="imgs/stacks/orange_lapl.png" alt="Image 1">
-    <p>Let's make an Oraple. Here's my Figure 3.4.2 </p>
-    <img src="imgs/fig342.png" alt="Image 1">
-    <img src="imgs/stacks/apple_gauss.png" alt="Image 1">
-<p>Still hungry, so here's pasta and soup combined.</p>
-    <img src="imgs/stacks/apple_gauss.png" alt="Image 1">
-    <img src="imgs/stacks/apple_lapl.png" alt="Image 1">
-    <img src="imgs/stacks/orange_gauss.png" alt="Image 1">
-    <img src="imgs/stacks/orange_lapl.png" alt="Image 1">
+<p>Apple Gaussian stack, Apple Laplacian stack, Orange Gaussian stack, Orange Laplacian stack</p>
 
--->
+<img src="imgs/stacks/apple_gauss.png" alt="Apple Gaussian Stack" class="full-width">
+<img src="imgs/stacks/apple_lapl.png" alt="Apple Laplacian Stack" class="full-width">
+<img src="imgs/stacks/orange_gauss.png" alt="Orange Gaussian Stack" class="full-width">
+<img src="imgs/stacks/orange_lapl.png" alt="Orange Laplacian Stack" class="full-width">
+
+<p>Let's make an Oraple. Here's my Figure 3.4.2</p>
+<img src="imgs/fig342.png" alt="Figure 3.4.2" class="full-width">
+
+<p>Still hungry, so here's pasta and soup combined.</p>
+
+<img src="imgs/stacks/pasta_lapl_stack.png" alt="Apple Laplacian Stack" class="full-width">
+<img src="imgs/stacks/soup_lapl_stack.png" alt="Orange Gaussian Stack" class="full-width">
+<img src="imgs/stacks/pasta_soup_lapl_stack.png" alt="Orange Laplacian Stack" class="full-width">
+
 </body>
 </html>
