@@ -7,12 +7,6 @@
             font-family: "Times New Roman", Times, serif;
             margin: 20px;
         }
-
-        img {
-            width: auto;
-            height: 400px;
-        }
-        
         .image-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -63,6 +57,21 @@
         <img src="imgs/cameraman.png" alt="cameraman">
     </figure>
     <p>We can show the partial derivative in x and y of him by convolving the image with finite difference operators D_x and D_y. On the right, the binarized gradient magnitude image is shown.</p>
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/cameraman_dx.png" alt="Image 1">
+            <figcaption>Dx</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/cameraman_dy.png" alt="Image 2">
+            <figcaption>Dy</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/cameraman_magnitude.png" alt="Image 3">
+            <figcaption>Binarized Gradient Magnitude</figcaption>
+        </figure>
+    </div>
+<!--
     <div class="image-ontainer">
         <img src="imgs/cameraman_dx.png" alt="Image 1">
         <figcaption>Dx</figcaption>
@@ -169,5 +178,7 @@
     <img src="imgs/stacks/apple_lapl.png" alt="Image 1">
     <img src="imgs/stacks/orange_gauss.png" alt="Image 1">
     <img src="imgs/stacks/orange_lapl.png" alt="Image 1">
+
+-->
 </body>
 </html>
