@@ -7,10 +7,14 @@
             font-family: "Times New Roman", Times, serif;
             margin: 20px;
         }
+        .third-width {
+            width: 33.33%; 
+            height: auto; 
+        }
         .image-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 10px;
             margin-top: 20px;
         }
         .image-grid img {
@@ -19,26 +23,7 @@
         }
         .image-grid figcaption {
             text-align: center;
-            font-size: 14px;
-            margin-top: 5px;
-            line-height: 1.5;
-        }
-        .image-container {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 20px; /* Space between images */
-        }
-        .image-container figure {
-            text-align: center;
-            max-width: 30%; /* Adjust this value to control image size */
-        }
-        .image-container img {
-            width: 100%; /* Make image fill the figure's width */
-            height: auto; /* Maintain aspect ratio */
-        }
-        .image-container figcaption {
-            font-size: 14px;
+            font-size: 20px;
             margin-top: 5px;
             line-height: 1.5;
         }
@@ -54,7 +39,7 @@
     <h3>Finite Difference Operator</h3>
     <p>First, let's look at this cameraman image.</p>
     <figure>
-        <img src="imgs/cameraman.png" alt="cameraman">
+        <img src="imgs/cameraman.png" alt="cameraman" class="third-width">
     </figure>
     <p>We can show the partial derivative in x and y of him by convolving the image with finite difference operators D_x and D_y. On the right, the binarized gradient magnitude image is shown.</p>
     <div class="image-grid">
