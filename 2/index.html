@@ -23,7 +23,7 @@
         }
         .image-grid figcaption {
             text-align: center;
-            font-size: 20px;
+            font-size: 16px;
             margin-top: 5px;
             line-height: 1.5;
         }
@@ -56,22 +56,17 @@
             <figcaption>Binarized Gradient Magnitude</figcaption>
         </figure>
     </div>
-<!--
-    <div class="image-ontainer">
-        <img src="imgs/cameraman_dx.png" alt="Image 1">
-        <figcaption>Dx</figcaption>
-        <img src="imgs/cameraman_dy.png" alt="Image 2">
-        <figcaption>Dy</figcaption>
-        <img src="imgs/cameraman_magnitude.png" alt="Image 3">
-        <figcaption>Binarized Gradient Magnitude</figcaption>
-    </div>
     <h3>Derivative of Gaussian (DoG) Filter</h3>
      <p>Here, I created a blurred version of the original cameraman image by convolving with a gaussian. The procedure in the previous part was repeated, but <b>now I can see an improved difference in the smoothness and thickness of the edges.</b></p>
-    <div class="image-container">
-        <img src="imgs/cameraman_DoG_x.png" alt="Image 1">
-        <figcaption>DoG of x</figcaption>
-        <img src="imgs/cameraman_DoG_y.png" alt="Image 2">
-        <figcaption>DoG of y</figcaption>
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/cameraman_DoG_x.png" alt="Image 1">
+            <figcaption>DoG of x</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/cameraman_DoG_y.png" alt="Image 2">
+            <figcaption>DoG of y</figcaption>
+        </figure>
     </div>
     <p>I can do the same thing with a single convolution instead of two, just by creating a derivative of gaussian filters. <b>This gives the exact same result as before! MSE of both images compared to their previous counterparts is &lt;0.005.</b></p>
 
@@ -79,7 +74,7 @@
     <h2>Part 2: Fun with Frequencies</h2>
     <h3>Image "Sharpening"</h3>
     <p>In this part, I derived the unsharp masking technique. We can subtract the blurred version of an image from the original to get the high frequencies of the image. An image often looks sharper if it has stronger high frequencies! See this example with the beautiful Taj Mahal: </p>
-    <div class="image-container">
+    <div class="image-grid">
         <figure>
             <img src="imgs/taj.jpg" alt="Image 1">
             <figcaption>Original image</figcaption>
@@ -98,45 +93,70 @@
         </figure>
     </div>
     <p>Nice. For evaluation, let's blur and then sharpen this picture I snapped with my camera at Napa Valley:</p>
-    <div class="image-container">
-        <img src="imgs/wine.jpg" alt="Image 1">
-        <figcaption>Original image</figcaption>
-        <img src="imgs/blurry_wine.png" alt="Image 2">
-        <figcaption>Blurred</figcaption>y</figcaption>
-        <img src="imgs/sharpened_wine.png" alt="Image 2">
-        <figcaption>Sharpened</figcaption>y</figcaption>
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/wine.jpg" alt="Image 1">
+            <figcaption>Original image</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/blurry_wine.png" alt="Image 2">
+            <figcaption>Blurred</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/sharpened_wine.png" alt="Image 3">
+            <figcaption>Sharpened</figcaption>
+        </figure>
     </div>
         <p>And another one with my roommate, Coh, who came to Napa with me:</p>
-    <div class="image-container">
-        <img src="imgs/coh_small.png" alt="Image 1">
-        <figcaption>Original image</figcaption>
-        <img src="imgs/blurry_coh.png" alt="Image 2">
-        <figcaption>Blurred</figcaption>y</figcaption>
-        <img src="imgs/sharpened_coh.png" alt="Image 2">
-        <figcaption>Sharpened</figcaption>y</figcaption>
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/coh_small.png" alt="Image 1">
+            <figcaption>Original image</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/blurry_coh.png" alt="Image 2">
+            <figcaption>Blurred</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/sharpened_coh.png" alt="Image 3">
+            <figcaption>Sharpened</figcaption>
+        </figure>
     </div>
     <p>The wine is looking nice and sharp! But Coh could use some adjustment on how much of her high frequencies we're adding.</p>
     <hr width="100%" size="2">
     <h3>Hybrid Images</h3>
     <p>In this part, I attempted to create hybrid images using the approach described in the SIGGRAPH 2006 paper by Oliva, Torralba, and Schyns. By blending the high frequency portion of one image with the low-frequency portion of another, you can get a hybrid image that leads to different interpretations at different distances!</p>
     <p>Let's blend Derek and his cat Nutmeg by taking the low frequencies of Derek and the high frequencies of Nutmeg.</p>
-    <div class="image-container">
-        <img src="imgs/DerekPicture.jpg" alt="Image 1">
-        <figcaption>Derek</figcaption>
-        <img src="imgs/nutmeg.jpg" alt="Image 2">
-        <figcaption>Nutmeg</figcaption>y</figcaption>
-        <img src="imgs/derekcat.png" alt="Image 2">
-        <figcaption>Derek + Nutmeg = Dermeg</figcaption>y</figcaption>
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/DerekPicture.jpg" alt="Image 1">
+            <figcaption>Derek</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/nutmeg.jpg" alt="Image 2">
+            <figcaption>Nutmeg</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/derekcat.png" alt="Image 3">
+            <figcaption>Derek + Nutmeg = Dermeg</figcaption>
+        </figure>
     </div>
     <p>I'm feeling hungry, so let's turn my roommate Coh from earlier into a ear of corn.</p>
-    <div class="image-container">
-        <img src="imgs/coh_small.png" alt="Image 1">
-        <figcaption>Coh</figcaption>
-        <img src="imgs/corn_small.png" alt="Image 2">
-        <figcaption>Corn</figcaption>y</figcaption>
-        <img src="imgs/cohcorn.png" alt="Image 2">
-        <figcaption>Coh + Corn = Cohrn</figcaption>y</figcaption>
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/coh_small.png" alt="Image 1">
+            <figcaption>Coh</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/corn_small.png" alt="Image 2">
+            <figcaption>Corn</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/cohcorn.png" alt="Image 3">
+            <figcaption>Coh + Corn = Cohrn</figcaption>
+        </figure>
     </div>
+<!--
     <p>For Cohrn, we can illustrate the process through frequency analysis. Shown here is the log magnitude of the Fourier transform of the two input images, the filtered images, and the hybrid image.</p>
     <div class="image-container">
         <img src="imgs/freq_specs/im1.png" alt="Image 1">
