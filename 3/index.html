@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 3 - CS180</title>
     <style>
         body {
@@ -23,143 +25,64 @@
             margin-top: 5px;
             line-height: 1.5;
         }
+        h1, h2, h3 {
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Project 3: Face Morphing</h1>
     <hr width="100%" size="2">
+    
     <h2>Overview</h2>
-    <p>In this project, I produced a "morph" animation of my face into another face (my roommate), computed the mean of a population of faces, and extrapolated from a population mean to see what an "average face" looked face + created caricatures of myself.</p>
+    <p>In this project, I produced a "morph" animation of my face into another face (my roommate), computed the mean of a population of faces, and extrapolated from a population mean to see what an "average face" looked like, plus created caricatures of myself.</p>
     
     <hr width="100%" size="2">
+    
     <h2>Approach</h2>
     
     <h3>Defining Correspondences</h3>
-    <p>First, I cropped a headshot of myself and one of my roommate Ally to have the same dimensions, and so that our faces have similar size and aspect ratio. I then constructed a simple <code>get_points</code> function to select 50 correspondence points for each of the two images (including the four corners of the image). Finally, I created a Delaunay triangulation with the means of the correspondence points using the <code>scipy.spatial.Delaunay</code> function.
+    <p>First, I cropped a headshot of myself and one of my roommate Ally to have the same dimensions, and so that our faces have similar size and aspect ratio. I then constructed a simple <code>get_points</code> function to select 50 correspondence points for each of the two images (including the four corners of the image). Finally, I created a Delaunay triangulation with the means of the correspondence points using the <code>scipy.spatial.Delaunay</code> function.</p>
+    
     <div class="image-grid">
         <figure>
-            <img src="imgs/audrey_triangles.png" alt="Audrey triangles">
+            <img src="imgs/audrey_triangles.png" alt="Audrey triangulation">
             <figcaption>Triangulation of Audrey</figcaption>
         </figure>
         <figure>
-            <img src="imgs/ally_triangles.png" alt="Ally triangles">
+            <img src="imgs/ally_triangles.png" alt="Ally triangulation">
             <figcaption>Triangulation of Ally</figcaption>
         </figure>
-        
+    </div>
+    
     <h3>Computing the "Mid-Way Face"</h3>
     <p>Before going through the entire morph sequence, let's first compute the mid-way face of Ally and I.</p>
-        
+    
     <ol>
-      <li>First, we need the average shape (a.k.a the average of each keypoint location in the two faces).</li>
-      <li>Second, we need to warp both faces into that shape. This is done by calculating the inverse of the affine transformation matrix A between the original triangle in each headshot and the corresponding triangle in the average shape.</li>
-      <li>Third - simple! Now just average the warped images together to cross-dissolve.</li>
+        <li>First, we need the average shape (a.k.a the average of each keypoint location in the two faces).</li>
+        <li>Second, we need to warp both faces into that shape. This is done by calculating the inverse of the affine transformation matrix A between the original triangle in each headshot and the corresponding triangle in the average shape.</li>
+        <li>Third - simple! Now just average the warped images together to cross-dissolve.</li>
     </ol>
 
     <div class="image-grid">
         <figure>
-            <img src="imgs/audrey.png" alt="Audrey triangles">
+            <img src="imgs/audrey.png" alt="Audrey">
             <figcaption>Just Audrey</figcaption>
         </figure>
         <figure>
-            <img src="imgs/midwayface.png" alt="Ally triangles">
-            <figcaption>Both of us</figcaption>
+            <img src="imgs/midwayface.png" alt="Mid-way face">
+            <figcaption>Both of us (mid-way face)</figcaption>
         </figure>
         <figure>
-            <img src="imgs/ally.png" alt="Ally triangles">
+            <img src="imgs/ally.png" alt="Ally">
             <figcaption>Just Ally</figcaption>
         </figure>
-    
-    <h3>The Morph Sequence</h3>
-    <p>By slightly modifying my code from Part 2 to include two additional parameters <code>warp_frac</code> and <code>warp_frac</code> (both varying from [0, 1]), we can create a morph sequence. Here's a sequence with 40 frames, with duration of 30 ms per frame.</p>
-    
-    <hr width="100%" size="2">
-    <h2>Results</h2>
-    <div class="image-grid">
-        <figure>
-            <img src="imgs/cathedral.jpg" alt="Image 1">
-            <figcaption>cathedral.jpg<br>R: (12, 3), G: (5, 2)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/church.jpg" alt="Image 2">
-            <figcaption>church.jpg<br>R: (58, -4), G: (25, 4)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/emir.jpg" alt="Image 3">
-            <figcaption>emir.jpg<br>R: (0, -405), G: (49, 24)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/harvesters.jpg" alt="Image 4">
-            <figcaption>harvesters.jpg<br>R: (127, 14), G: (59, 17)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/icon.jpg" alt="Image 5">
-            <figcaption>icon.jpg<br>R: (89, 23), G: (41, 17)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/lady.jpg" alt="Image 6">
-            <figcaption>lady.jpg<br>R: (117, 11), G: (52, 8)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/melons.jpg" alt="Image 7">
-            <figcaption>melons.jpg<br>R: (191, 13), G: (81, 10)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/monastery.jpg" alt="Image 8">
-            <figcaption>monastery.jpg<br>R: (3, 2), G: (-3, 2)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/onion_church.jpg" alt="Image 9">
-            <figcaption>onion_church.jpg<br>R: (113, 36), G: (51, 27)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/sculpture.jpg" alt="Image 10">
-            <figcaption>sculpture.jpg<br>R: (147, -26), G: (33, -11)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/self_portrait.jpg" alt="Image 11">
-            <figcaption>self_portrait.jpg<br>R: (191, 38), G: (78, 29)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/three_generations.jpg" alt="Image 12">
-            <figcaption>three_generations.jpg<br>R: (113, 11), G: (52, 13)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/tobolsk.jpg" alt="Image 13">
-            <figcaption>tobolsk.jpg<br>R: (6, 3), G: (3, 3)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/train.jpg" alt="Image 14">
-            <figcaption>train.jpg<br>R: (87, 32), G: (42, 6)</figcaption>
-        </figure>
     </div>
-    <p>All images looked beautifully colored and relatively clear, except for Emir. A potential issue with him is that his blue coat shows up as pixels equal or close to 1 in the blue channel image, but much less light/information is captured in the green and red channel images. This can throw off NCC as it is based off of the RGB color channel matching - a metric like SSIM that doesn't depend on this could have better performance.</p>
 
-    <hr width="100%" size="2">
-    <h2>Additional Examples</h2>
-    <div class="image-grid">
-        <figure>
-            <img src="imgs/canal.jpg" alt="Image 1">
-            <figcaption>canal.jpg<br>R: (47, 48), G: (28, 24)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/flower_bush.jpg" alt="Image 2">
-            <figcaption>flower_bush.jpg<br>R: (97, -24), G: (49, -6)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/flower_field.jpg" alt="Image 3">
-            <figcaption>flower_field.jpg<br>R: (60, 13), G: (8, 8)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/forest_path.jpg" alt="Image 4">
-            <figcaption>forest_path.jpg<br>R: (129, 41), G: (56, 21)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/lady_thinking.jpg" alt="Image 5">
-            <figcaption>lady_thinking.jpg<br>R: (76, 35), G: (38, 21)</figcaption>
-        </figure>
-        <figure>
-            <img src="imgs/lugano.jpg" alt="Image 6">
-            <figcaption>lugano.jpg<br>R: (93, -29), G: (41, -16)</figcaption>
-        </figure>
+    <h3>The Morph Sequence</h3>
+    <p>By slightly modifying my code from Part 2 to include two additional parameters <code>warp_frac</code> and <code>cross_dissolve_frac</code> (both varying from [0, 1]), we can create a morph sequence. Here's a sequence with 40 frames, with a duration of 30 ms per frame.</p>
 </body>
 </html>
