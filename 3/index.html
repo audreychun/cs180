@@ -28,8 +28,11 @@
         h1, h2, h3 {
             margin-bottom: 10px;
         }
-        p {
+        p, li {
             margin-bottom: 20px;
+        }
+        hr {
+            margin: 30px 0;
         }
     </style>
 </head>
@@ -92,55 +95,58 @@
     <p>We can morph each face in the dataset to this average face shape. Here's some examples:</p>
     <div class="image-grid">
         <figure>
-            <img src="imgs/avg_face1.png" alt="Audrey">
+            <img src="imgs/avg_face1.png" alt="Person 1">
             <figcaption>Person 1 (Original)</figcaption>
         </figure>
         <figure>
-            <img src="imgs/avg_face2.png" alt="Mid-way face">
+            <img src="imgs/avg_face2.png" alt="Person 2">
             <figcaption>Person 2 (Original)</figcaption>
         </figure>
         <figure>
-            <img src="imgs/avg_face3.png" alt="Ally">
+            <img src="imgs/avg_face3.png" alt="Person 3">
             <figcaption>Person 3 (Original)</figcaption>
         </figure>
         <figure>
-            <img src="imgs/avg_face1_warp.png" alt="Audrey">
+            <img src="imgs/avg_face1_warp.png" alt="Person 1 warped">
             <figcaption>Person 1 (Average Warp)</figcaption>
         </figure>
         <figure>
-            <img src="imgs/avg_face2_warp.png" alt="Mid-way face">
+            <img src="imgs/avg_face2_warp.png" alt="Person 2 warped">
             <figcaption>Person 2 (Average Warp)</figcaption>
         </figure>
         <figure>
-            <img src="imgs/avg_face3_warp.png" alt="Ally">
+            <img src="imgs/avg_face3_warp.png" alt="Person 3 warped">
             <figcaption>Person 3 (Average Warp)</figcaption>
         </figure>
     </div>
     <p>I can not only morph my face into the average shape, but also morph the average face into my shape!</p>
     <div class="image-grid">
         <figure>
-            <img src="imgs/me_averaged.png" alt="ave">
+            <img src="imgs/me_averaged.png" alt="Me averaged">
             <figcaption>Me, averaged</figcaption>
         </figure>
         <figure>
-            <img src="imgs/averaged_me.png" alt="ave">
+            <img src="imgs/averaged_me.png" alt="Average like me">
             <figcaption>Average like me</figcaption>
         </figure>
+    </div>
+
     <h3>Caricatures: Extrapolating from the mean</h3>
     <p>If I extrapolate from the population mean from the last step and mess around with abnormal warp values, I can have a very big chin.</p>
     <img src="imgs/chin.png" alt="chin">
-        
+    
     <h3>Bells and Whistles</h3>
     
     <div class="image-grid">
         <figure>
-            <img src="imgs/cass.jpg" alt="Audrey triangulation">
+            <img src="imgs/cass.jpg" alt="Regular Cassidy">
             <figcaption>Regular Cassidy</figcaption>
         </figure>
         <figure>
-            <img src="imgs/cass_silly.png" alt="Ally triangulation">
+            <img src="imgs/cass_silly.png" alt="Silly Cassidy">
             <figcaption>Silly Cassidy</figcaption>
         </figure>
     </div>
+
 </body>
 </html>
