@@ -29,22 +29,48 @@
     <h1>Project 3: Face Morphing</h1>
     <hr width="100%" size="2">
     <h2>Overview</h2>
-    <p>In this project, I produced a "morph" animation of my face into another face (my roommate), computed the mean of a population of faces, and extrapolated from a population mean to create a caricature of myself.</p>
+    <p>In this project, I produced a "morph" animation of my face into another face (my roommate), computed the mean of a population of faces, and extrapolated from a population mean to see what an "average face" looked face + created caricatures of myself.</p>
+    
     <hr width="100%" size="2">
     <h2>Approach</h2>
+    
     <h3>Defining Correspondences</h3>
-    <p>First, I separated the 3 RGB color channels by dividing the original image into three equal parts along its height axis. Next, I cropped the image by 15% on each side as to avoid issues caused by the border throwing off image similarity metrics. </p>
-    <p>The exhaustive search was implemented by naively searching over a 30x30 window, shifting the image to be aligned (G or R) from [-15, 15] on both width and height. At each shift, the image to be aligned was compared with the reference image (B) and evaluated by an image comparison metric. Metrics that I tested were MSE (Mean Squared Error), NCC (Normalized Cross Correlation), and SSIM (Structural Similarity Index Measure). I found NCC to be the most efficient as well as relatively accurate. </p>
-    <p>For larger images, exhaustive search (even on the same 30x30 window size) becomes quite slow. I parallelized the exhaustive search function using ThreadPoolExecutor, which distributes the work of calculating NCC for different pixel shifts across multiple CPU cores (instead of just one). This allows multiple computations to run simultaneously instead of sequentially, so it's much faster! This reduced runtime with the image pyramid from 2 minutes &plusmn; 5 seconds to 30 seconds &plusmn; 2 seconds for all images. Speaking of the image pyramid, let's go to the next section. &#9786; </p>
-    
-    <h3>Constructing an Image Pyramid</h3>
+    <p>First, I cropped a headshot of myself and one of my roommate Ally to have the same dimensions, and so that our faces have similar size and aspect ratio. I then constructed a simple <code>get_points</code> function to select 50 correspondence points for each of the two images (including the four corners of the image). Finally, I created a Delaunay triangulation with the means of the correspondence points using the <code>scipy.spatial.Delaunay</code> function.
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/audrey_triangles.png" alt="Audrey triangles">
+            <figcaption>Triangulation of Audrey</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/ally_triangles.png" alt="Ally triangles">
+            <figcaption>Triangulation of Ally</figcaption>
+        </figure>
+        
+    <h3>Computing the "Mid-Way Face"</h3>
+    <p>Before going through the entire morph sequence, let's first compute the mid-way face of Ally and I.</p>
+        
+    <ol>
+      <li>First, we need the average shape (a.k.a the average of each keypoint location in the two faces).</li>
+      <li>Second, we need to warp both faces into that shape. This is done by calculating the inverse of the affine transformation matrix A between the original triangle in each headshot and the corresponding triangle in the average shape.</li>
+      <li>Third - simple! Now just average the warped images together to cross-dissolve.</li>
+    </ol>
 
-    <p>For high-resolution glass plate scans, exhaustive search will become prohibitively expensive since the pixel displacement is too large. An image pyramid is an alternative, faster search procedure. The pyramid represents the input image at multiple scales (I scaled by a factor of 2) and sequentially performs exhaustive search by starting from the coarsest scale (smallest image) and going down the pyramid, updating the estimate as you go.</p>
-
-    <p>In short, the image pyramid progressively refines the displacement at different image scales. It first downsamples the two images by half the resolution and recursively searches for the displacement at the lower resolution. Once the best displacement is found at the lowest resolution, it scales the displacement back up and refines the alignment at the original resolution using exhaustive search (parallelized version). This is way more efficient because it narrows down the search space at each level!</p>
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/audrey.png" alt="Audrey triangles">
+            <figcaption>Just Audrey</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/midwayface.png" alt="Ally triangles">
+            <figcaption>Both of us</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/ally.png" alt="Ally triangles">
+            <figcaption>Just Ally</figcaption>
+        </figure>
     
-    <h3>Bells and Whistles</h3>
-    <p>SSIM: </p>
+    <h3>The Morph Sequence</h3>
+    <p>By slightly modifying my code from Part 2 to include two additional parameters <code>warp_frac</code> and <code>warp_frac</code> (both varying from [0, 1]), we can create a morph sequence. Here's a sequence with 40 frames, with duration of 30 ms per frame.</p>
     
     <hr width="100%" size="2">
     <h2>Results</h2>
