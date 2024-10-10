@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 3 - CS180</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            margin: 20px;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .image-grid img {
+            width: 100%;
+            height: auto;
+        }
+        .image-grid figcaption {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project 3: Face Morphing</h1>
+    <hr width="100%" size="2">
+    <h2>Overview</h2>
+    <p>In this project, I produced a "morph" animation of my face into another face (my roommate), computed the mean of a population of faces, and extrapolated from a population mean to create a caricature of myself.</p>
+    <hr width="100%" size="2">
+    <h2>Approach</h2>
+    <h3>Defining Correspondences</h3>
+    <p>First, I separated the 3 RGB color channels by dividing the original image into three equal parts along its height axis. Next, I cropped the image by 15% on each side as to avoid issues caused by the border throwing off image similarity metrics. </p>
+    <p>The exhaustive search was implemented by naively searching over a 30x30 window, shifting the image to be aligned (G or R) from [-15, 15] on both width and height. At each shift, the image to be aligned was compared with the reference image (B) and evaluated by an image comparison metric. Metrics that I tested were MSE (Mean Squared Error), NCC (Normalized Cross Correlation), and SSIM (Structural Similarity Index Measure). I found NCC to be the most efficient as well as relatively accurate. </p>
+    <p>For larger images, exhaustive search (even on the same 30x30 window size) becomes quite slow. I parallelized the exhaustive search function using ThreadPoolExecutor, which distributes the work of calculating NCC for different pixel shifts across multiple CPU cores (instead of just one). This allows multiple computations to run simultaneously instead of sequentially, so it's much faster! This reduced runtime with the image pyramid from 2 minutes &plusmn; 5 seconds to 30 seconds &plusmn; 2 seconds for all images. Speaking of the image pyramid, let's go to the next section. &#9786; </p>
+    
+    <h3>Constructing an Image Pyramid</h3>
+
+    <p>For high-resolution glass plate scans, exhaustive search will become prohibitively expensive since the pixel displacement is too large. An image pyramid is an alternative, faster search procedure. The pyramid represents the input image at multiple scales (I scaled by a factor of 2) and sequentially performs exhaustive search by starting from the coarsest scale (smallest image) and going down the pyramid, updating the estimate as you go.</p>
+
+    <p>In short, the image pyramid progressively refines the displacement at different image scales. It first downsamples the two images by half the resolution and recursively searches for the displacement at the lower resolution. Once the best displacement is found at the lowest resolution, it scales the displacement back up and refines the alignment at the original resolution using exhaustive search (parallelized version). This is way more efficient because it narrows down the search space at each level!</p>
+    
+    <h3>Bells and Whistles</h3>
+    <p>SSIM: </p>
+    
+    <hr width="100%" size="2">
+    <h2>Results</h2>
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/cathedral.jpg" alt="Image 1">
+            <figcaption>cathedral.jpg<br>R: (12, 3), G: (5, 2)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/church.jpg" alt="Image 2">
+            <figcaption>church.jpg<br>R: (58, -4), G: (25, 4)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/emir.jpg" alt="Image 3">
+            <figcaption>emir.jpg<br>R: (0, -405), G: (49, 24)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/harvesters.jpg" alt="Image 4">
+            <figcaption>harvesters.jpg<br>R: (127, 14), G: (59, 17)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/icon.jpg" alt="Image 5">
+            <figcaption>icon.jpg<br>R: (89, 23), G: (41, 17)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/lady.jpg" alt="Image 6">
+            <figcaption>lady.jpg<br>R: (117, 11), G: (52, 8)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/melons.jpg" alt="Image 7">
+            <figcaption>melons.jpg<br>R: (191, 13), G: (81, 10)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/monastery.jpg" alt="Image 8">
+            <figcaption>monastery.jpg<br>R: (3, 2), G: (-3, 2)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/onion_church.jpg" alt="Image 9">
+            <figcaption>onion_church.jpg<br>R: (113, 36), G: (51, 27)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/sculpture.jpg" alt="Image 10">
+            <figcaption>sculpture.jpg<br>R: (147, -26), G: (33, -11)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/self_portrait.jpg" alt="Image 11">
+            <figcaption>self_portrait.jpg<br>R: (191, 38), G: (78, 29)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/three_generations.jpg" alt="Image 12">
+            <figcaption>three_generations.jpg<br>R: (113, 11), G: (52, 13)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/tobolsk.jpg" alt="Image 13">
+            <figcaption>tobolsk.jpg<br>R: (6, 3), G: (3, 3)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/train.jpg" alt="Image 14">
+            <figcaption>train.jpg<br>R: (87, 32), G: (42, 6)</figcaption>
+        </figure>
+    </div>
+    <p>All images looked beautifully colored and relatively clear, except for Emir. A potential issue with him is that his blue coat shows up as pixels equal or close to 1 in the blue channel image, but much less light/information is captured in the green and red channel images. This can throw off NCC as it is based off of the RGB color channel matching - a metric like SSIM that doesn't depend on this could have better performance.</p>
+
+    <hr width="100%" size="2">
+    <h2>Additional Examples</h2>
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/canal.jpg" alt="Image 1">
+            <figcaption>canal.jpg<br>R: (47, 48), G: (28, 24)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/flower_bush.jpg" alt="Image 2">
+            <figcaption>flower_bush.jpg<br>R: (97, -24), G: (49, -6)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/flower_field.jpg" alt="Image 3">
+            <figcaption>flower_field.jpg<br>R: (60, 13), G: (8, 8)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/forest_path.jpg" alt="Image 4">
+            <figcaption>forest_path.jpg<br>R: (129, 41), G: (56, 21)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/lady_thinking.jpg" alt="Image 5">
+            <figcaption>lady_thinking.jpg<br>R: (76, 35), G: (38, 21)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/lugano.jpg" alt="Image 6">
+            <figcaption>lugano.jpg<br>R: (93, -29), G: (41, -16)</figcaption>
+        </figure>
+</body>
+</html>
