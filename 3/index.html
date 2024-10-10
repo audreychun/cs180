@@ -85,5 +85,37 @@
     <h3>The Morph Sequence</h3>
     <p>By slightly modifying my code from Part 2 to include two additional parameters <code>warp_frac</code> and <code>cross_dissolve_frac</code> (both varying from [0, 1]), we can create a morph sequence. Here's a sequence with 50 frames, with a duration of 10 ms per frame.</p>
     <img src="imgs/morph.gif" alt="Morph GIF">
+
+    <h3>The "Mean face" of a population</h3>
+    <p>For this part, I computed the average face of 56 individuals from the <a href="https://fei.edu.br/~cet/facedatabase.html">FEI Dataset</a>. I selected this specific subset to all be smiling people (showing teeth!) for less variance and blurriness. I first extracted the correspondence keypoints from the annotations for each image. Then, I averaged all correspondence points to obtain the average triangulation, warped each face in the dataset to the average shape, and cross-dissolved to achieve the final result.</p>
+    <img src="imgs/average_face.png" alt="average face">
+    <p>We can morph each face in the dataset to this average face shape. Here's some examples:</p>
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/avg_face1.png" alt="Audrey">
+            <figcaption>Person 1 (Original)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/avg_face2.png" alt="Mid-way face">
+            <figcaption>Person 2 (Original)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/avg_face3.png" alt="Ally">
+            <figcaption>Person 3 (Original)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/avg_face1_warp.png" alt="Audrey">
+            <figcaption>Person 1 (Average Warp)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/avg_face2_warp.png" alt="Mid-way face">
+            <figcaption>Person 2 (Average Warp)</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/avg_face3_warp.png" alt="Ally">
+            <figcaption>Person 3 (Average Warp)</figcaption>
+        </figure>
+    </div>
+    
 </body>
 </html>
