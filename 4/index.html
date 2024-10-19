@@ -46,18 +46,14 @@
 
     <h3>Recovering Homographies</h3>
 
-    <p>Before I could warp my images into alignment, I needed to recover the parameters of the transformation between each pair of images. This transformation is a homography: <b>p’ = Hp</b>, where <b>H</b> is a 3x3 matrix with 8 degrees of freedom (the lower right corner is a scaling factor, and can be set to 1). I recovered the homography for my image pairs by:</p>
-    <ol>
-        <li>Manually creating a set of <b>(p’, p)</b> pairs of corresponding points, and</li>
-        <li>Using them as input parameters in the following function:</li>
-    </ol>
-    <code>H = computeH(im1_pts, im2_pts)</code>
+    <p>Before I could warp my images into alignment, I needed to recover the parameters of the transformation between each pair of images. This transformation is a homography: <b>p’ = Hp</b>, where <b>H</b> is a 3x3 matrix with 8 degrees of freedom (the lower right corner is a scaling factor, and can be set to 1). I recovered the homography for my image pairs by (1) manually creating a set of of <b>(p’,p)</b> pairs of corresponding points, and (2) using them as input parameters in this function:
+    <center><code>H = computeH(im1_pts, im2_pts)</code></center>
     <p><code>im1_pts</code> and <code>im2_pts</code> are n-by-2 matrices holding the (x, y) locations of n point correspondences from the two images. <code>H</code> is the recovered 3x3 homography matrix.</p>
 
     <h3>Warping the Images</h3>
 
     <p>Now that I had the parameters of the homography, I could use the homography to warp each image towards the reference image. I wrote a function of the form:</p>
-    <code>imwarped = warpImage(im, H)</code>
+    <center><code>imwarped = warpImage(im, H)</code><center>
     <p>Here, <code>im</code> is the input image to be warped and <code>H</code> is the homography. I used <code>scipy.interpolate.griddata</code> along with inverse warping in my <code>warpImage</code> function and marked pixels without any mapped values as <code>NaN</code> (black).</p>
 
     <h3>Image Rectification</h3>
