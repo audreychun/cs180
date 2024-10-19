@@ -52,8 +52,7 @@
 
     <h3>Warping the Images</h3>
 
-    <p>Now that I had the parameters of the homography, I could use the homography to warp each image towards the reference image. I wrote a function of the form:</p>
-    <center><code>imwarped = warpImage(im, H)</code><center>
+    <p>Now that I have the parameters of the homography, I can use the homography to warp each image towards the reference image. Let's create another function: <code>imwarped = warpImage(im, H)</code>
     <p>Here, <code>im</code> is the input image to be warped and <code>H</code> is the homography. I used <code>scipy.interpolate.griddata</code> along with inverse warping in my <code>warpImage</code> function and marked pixels without any mapped values as <code>NaN</code> (black).</p>
 
     <h3>Image Rectification</h3>
