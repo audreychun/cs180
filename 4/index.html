@@ -92,7 +92,41 @@
 
     <p>Using the method above, I can warp the first image of my living room to the world of the second image.</p>
 
-    <img src="imgs/room1_warped.png" alt="Warped Living Room Photo #1">
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/room1_warped.png" alt="Warped Living Room Photo #1">
+            <figcaption>Original picture of monitor</figcaption>
+        </figure>
+    </div>
+
+    <p>Nice. They can now perfectly overlap.</p>
+    
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/simple_overlap.png" alt="simple overlap">
+            <figcaption>Simple overlap</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/intersection_color.png" alt="intersection color">
+            <figcaption>Intersection shown with color (green)</figcaption>
+        </figure>
+    </div>
+
+    <p>But wait. It's pretty obvious that we're just overlaying two images on top of each other, even though we have warped the first perfectly to the second with the homography. We can try and make this smoother with a simple vertical blending mask, or make use of the <code>scipy.ndimage.distance_transform_edt</code> function (mimicks MATLAB's <code>bwdist</code> function) to create a distance mask, where an alpha value weighs each pixel based on its distance from the centers of the images.</p>
+    
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/vert_blend.png" alt="vert">
+            <figcaption>Vertical blending</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/radial_blend.png" alt="radial">
+            <figcaption><code>bwdist</code>-like blending</figcaption>
+        </figure>
+    </div>
+
+    <p>The second option looks pretty nice, so let's crop it to look more like a smooth paranoma:</p>
+    <img src="imgs/radial_blend_nice.png" alt="radial">
 
     <h3>Bells and Whistles</h3>
     <p>Something here!</p>
