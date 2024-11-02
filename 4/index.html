@@ -14,9 +14,15 @@
             margin-top: 20px;
         }
         .image-grid img {
+            width: calc(100% - 40px); /* Adjusts for 20px margin on each side */
+            height: 250px; /* Sets a specific height */
+            margin: 0 20px; /* Adds side margins */
+            object-fit: cover; /* Keeps the image within bounds without stretching */
+        }
+/*         .image-grid img {
             width: 100%;
             height: auto;
-        }
+        } */
         .image-grid figcaption {
             text-align: center;
             font-size: 18px;
