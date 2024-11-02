@@ -220,7 +220,9 @@
         </figure>
     </div>
 
-    <p>That's still a lot of points! And some of them aren't perfectly aligned. After this we will match feature descriptors by using the surrounding areas around each point (feature patches) as  64-dimensional vectors. We can compute the 1-NN and 2-NN of each feature patch using Euclidean distance as a metric, and use the Lowe ratio to determine a "good match": if the distance of the 1-NN divided by the distance of the 2-NN is less than our ratio (e.g. 0.7), then we know the 1-NN patch in the other image is likely to be a pretty good match given the surrounding context!</p>
+    <p>That's still a lot of points! And some of them aren't perfectly aligned. After this we will match feature descriptors by using the surrounding areas around each point (feature patches) as  64-dimensional vectors. We can compute the 1-NN and 2-NN of each feature patch using Euclidean distance as a metric, and use the Lowe ratio to determine a "good match": if the distance of the 1-NN divided by the distance of the 2-NN is less than our ratio (e.g. 0.7), then we know the 1-NN patch in the other image is likely to be a pretty good match given the surrounding context.</p>
+
+    <p>To detail my <code>extract_feature_descriptors</code> and <code>match_features</code> functions a little, I implemented Gaussian blurring and anti-aliasing before sampling a 40x40 patch down to 8x8. I chose to do this for each of the 3 RGB channels (then normalizing) rather than just grayscale to get slightly improved matching results.</p>
 
     <p>After this, we'll still have quite a few patches, so that's why we have one more step with RANSAC (random sample consensus) to narrow it down even further.</p>
         
