@@ -208,6 +208,62 @@
     </div>
 
     <p>That's a lot of points. Let's implement Adaptive Non-Maximal Suppression (from Section 3 of the Brown paper), so that we can narrow it down to a smaller amount to input into RANSAC after this.</p>
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/wurster1_filtered1.png" alt="Dining Photo #1">
+            <figcaption>Picture 1, after ANMS</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/wurster2_filtered1.png" alt="Dining Photo #2">
+            <figcaption>Picture 2, after ANMS</figcaption>
+        </figure>
+    </div>
+
+    <p>That's still a lot of points! And some of them aren't perfectly aligned. That's why we have one more step, RANSAC, that </p>
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/wurster1_filtered2.png" alt="Dining Photo #1">
+            <figcaption>Picture 1, after ANMS + RANSAC</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/wurster2_filtered2.png" alt="Dining Photo #2">
+            <figcaption>Picture 2, after ANMS + RANSAC</figcaption>
+        </figure>
+    </div>
+
+    <p>We use these remaining points as input to our <code>computeH</code> function from above, then use the resulting homography to warp the first image to the second, and finally combine and blend using the distance mask from above.</p>
+
+    <img src="imgs/wurster_blend_nice.png" alt="radial">
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/poles1.jpg" alt="Dining Photo #1">
+            <figcaption>Let's auto-warp + combine this image of this parking alley to...</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/poles2.jpg" alt="Dining Photo #2">
+            <figcaption>... this image of the parking alley!</figcaption>
+        </figure>
+    </div>
+
+    <img src="imgs/poles_blend_nice.png" alt="radial">
+
+    <p>One last example with this storefront in downtown SLO.</p>
+        
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/fizz1.jpg" alt="Dining Photo #1">
+            <figcaption>Fizz Image 1</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/fizz2.jpg" alt="Dining Photo #2">
+            <figcaption>Fizz Image 2</figcaption>
+        </figure>
+    </div>
+
+    <img src="imgs/fizz_blend_nice.png" alt="radial">
     
     <hr width="100%" size="2">
     <h2>Reflection</h2>
