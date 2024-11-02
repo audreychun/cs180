@@ -45,7 +45,7 @@
     <p>In this project, I continued to play with different aspects of image warping. In particular, I learned how to compute homographies to perform image mosaicing. Image mosaics were created by registering, projective warping, resampling, and compositing two or more images that I took.</p>
     <hr width="100%" size="2">
 
-    <h2>Approach</h2>
+    <h2>Part 1: Computing Homographies and Warping Images</h2>
 
     <h3>Recovering Homographies</h3>
 
@@ -152,6 +152,22 @@
 
     <img src="imgs/couch_blend_nice.png" alt="radial">
 
+    <p>Of a LOT of chocolate that I saw in a candy shop in downtown SLO:</p>
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/choco1.jpg" alt="Living Room Photo #1">
+            <figcaption>Chocolate Photo #1</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/choco2.jpg" alt="Living Room Photo #2">
+            <figcaption>Chocolate Photo #2</figcaption>
+        </figure>
+    </div>
+
+    <img src="imgs/choco_blend_nice.png" alt="radial">
+    <p>This one turns out a little blurrier because the original photos were pretty complex (it was also hard to rotate perfectly and not shift the center of my phone camera too much).</p>
+
     <p>And another of the dining area:</p>
 
     <div class="image-grid">
@@ -167,8 +183,17 @@
     
     <img src="imgs/dining_blend_nice.png" alt="radial">
 
-    <h3>Bells and Whistles</h3>
-    <p>Something here!</p>
+    <hr width="100%" size="2">
+    <h2>Part 2: Automatically Stitching Images Into a Mosaic</h2>
+    <p>It's a pain to have to manually choose points everytime, so it'd be cool to just automate the point stitching process (and then compute the homography, combine, and blend using the methods above). To automate, we'll follow the process outlined in <a href="https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=aa28b7a6744ce758edf96fe194363b34c3e9a91b">“Multi-Image Matching using Multi-Scale Oriented Patches” by Brown et al.</a></p>
+
+    <h3>Harris Corners</h3>
+    <p>First, we will detect Harris corners like how Section 2 (Harris Interest Point Detectors) was mentioned in the paper. Here are Harris corners overlaid on the study room I'm currently working in.</p>
+    <!-- OVERLAID HARRIS CORNERS OVER WURSTER HERE!! -->
+    
+    <hr width="100%" size="2">
+    <h2>Reflection</h2>
+    <p>The coolest thing I learned from this project is how easily the human visual perspective can be mimicked with a simple homography matrix!  The features extraction was also interesting because of how it mimicks how humans pick out important points in images, and then how we use those points (although many, many more of them than in this project) to quickly merge one frame of our vision to the next.</p>
 
 </body>
 </html>
