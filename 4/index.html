@@ -220,7 +220,10 @@
         </figure>
     </div>
 
-    <p>That's still a lot of points! And some of them aren't perfectly aligned. That's why we have one more step, RANSAC, that </p>
+    <p>That's still a lot of points! And some of them aren't perfectly aligned. After this we will match feature descriptors by using the surrounding areas around each point (feature patches) as  64-dimensional vectors. We can compute the 1-NN and 2-NN of each feature patch using Euclidean distance as a metric, and use the Lowe ratio to determine a "good match": if the distance of the 1-NN divided by the distance of the 2-NN is less than our ratio (e.g. 0.7), then we know the 1-NN patch in the other image is likely to be a pretty good match given the surrounding context!</p>
+
+    <p>After this, we'll still have quite a few patches, so that's why we have one more step with RANSAC (random sample consensus) to narrow it down even further.</p>
+        
 
     <div class="image-grid">
         <figure>
@@ -232,10 +235,12 @@
             <figcaption>Picture 2, after ANMS + RANSAC</figcaption>
         </figure>
     </div>
-
+    
     <p>We use these remaining points as input to our <code>computeH</code> function from above, then use the resulting homography to warp the first image to the second, and finally combine and blend using the distance mask from above.</p>
 
     <img src="imgs/wurster_blend_nice.png" alt="radial">
+
+    <p>More base images:</p>
 
     <div class="image-grid">
         <figure>
@@ -247,6 +252,8 @@
             <figcaption>... this image of the parking alley!</figcaption>
         </figure>
     </div>
+
+     <p>The final result!</p>
 
     <img src="imgs/poles_blend_nice.png" alt="radial">
 
@@ -262,6 +269,8 @@
             <figcaption>Fizz Image 2</figcaption>
         </figure>
     </div>
+    
+    <p>The final result!</p>
 
     <img src="imgs/fizz_blend_nice.png" alt="radial">
     
