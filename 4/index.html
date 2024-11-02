@@ -237,6 +237,10 @@
             <figcaption>Picture 2, after ANMS + RANSAC</figcaption>
         </figure>
     </div>
+
+    <p>Quick overview of what RANSAC just did: we iteratively sampled 4 points randomly from the source points and the destination points, calculated the homography, and over many iterations (I used ~200 depending on the image) chose the most "accurate" homography transformation based on the squared distances between the desired and actual points for each one.
+
+</p>
     
     <p>We use these remaining points as input to our <code>computeH</code> function from above, then use the resulting homography to warp the first image to the second, and finally combine and blend using the distance mask from above.</p>
 
