@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Project 4 - CS180</title>
+    <title>Project 5 - CS180</title>
     <style>
         body {
             font-family: "Times New Roman", Times, serif;
@@ -38,20 +38,108 @@
 <body>
     <h1>Project 5: Fun With Diffusion Models!</h1>
     <hr width="100%" size="2">
-    <h2>Overview</h2>
-    <p>In this project, I implemented and deployed diffusion models for image generation.</p>
+    <h2>Part A: The Power of Diffusion Models!</h2>
+    <h3>Overview</h3>
+    <p>In the first half of this project, I implemented and deployed diffusion models for image generation. I also played around with diffusion sampling loops for other tasks, such as inpainting and creating optical illusions.</p>
     <hr width="100%" size="2">
 
-    <h3>Part 0: Setup</h3>
+    <h2>Part 0: Setup</h2>
 
-    <p>In the notebook, we instantiate DeepFloyd's stage_1 and stage_2 objects used for generation, as well as several text prompts for sample generation.</p>
+    <p>We utilized the <a href="https://huggingface.co/docs/diffusers/api/pipelines/deepfloyd_if">DeepFloyd IF</a> diffusion model, a two stage model trained by Stability AI. In the notebook, we instantiate DeepFloyd's <code>stage_1</code> and <code>stage_2</code> objects used for generation, as well as several text prompts for sample generation.</p>
 
-    <p>For the 3 text prompts that we provide, display the caption and the output of the model. Reflect on the quality of the outputs and their relationships to the text prompts. Make sure to try at least 2 different num_inference_steps values.
-    Report the random seed that you're using here. You should use the same seed all subsequent parts.</p>
+    <p>I used the <b>random seed 517</b> and num_inference_steps = 5, 20, and 200 to generate samples for precomputed text embeddings.</p>
 
-    <h3>Warping the Images</h3>
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/snowy_village_5.png" alt="snow">
+            <figcaption>'an oil painting of a snowy mountain village'<br>num_inference_steps = 5</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/man_hat_5.png" alt="man">
+            <figcaption>'a man wearing a hat'<br>num_inference_steps = 5</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/rocket_ship_5.png" alt="rocket">
+            <figcaption>'a rocket ship'<br>num_inference_steps = 5</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/snowy_village_20.png" alt="snow">
+            <figcaption>'an oil painting of a snowy mountain village'<br>num_inference_steps = 20</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/man_hat_20.png" alt="man">
+            <figcaption>'a man wearing a hat'<br>num_inference_steps = 20</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/rocket_ship_20.png" alt="rocket">
+            <figcaption>'a rocket ship'<br>num_inference_steps = 20</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/snowy_village_200.png" alt="snow">
+            <figcaption>'an oil painting of a snowy mountain village'<br>num_inference_steps = 200</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/man_hat_200.png" alt="man">
+            <figcaption>'a man wearing a hat'<br>num_inference_steps = 200</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/rocket_ship_200.png" alt="rocket">
+            <figcaption>'a rocket ship'<br>num_inference_steps = 200</figcaption>
+        </figure>
+    </div>
 
+    <p>TODO!!!! Need to give description and thoughts here.</p>
 
+    <hr width="100%" size="2">
+
+    <h2>Part 1: Sampling Loops</h2>
+
+    <h3>1.1 Implementing the Forward Process</h3>
+
+    <h3>1.2 Classical Denoising</h3>
+
+    <h3>1.3 One-Step Denoising</h3>
+
+    <h3>1.4 Iterative Denoising</h3>
+
+    <h3>1.5 Diffusion Model Sampling</h3>
+
+    <h3>1.6 Classifier-Free Guidance (CFG)</h3>
+
+    <h3>1.7 Image-to-image Translation</h3>
+
+    <h4>1.7.1 Editing Hand-Drawn and Web Images/h4>
+
+    <h4>1.7.2 Inpainting</h4>
+
+    <h4>1.7.3 Text-Conditional Image-to-image Translation</h4>
+
+    <h3>1.8 Visual Anagrams</h3>
+
+    <h3>1.9 Hybrid Images</h3>
+
+    <hr width="100%" size="2">
+
+    <h3>Part 2 (of Part A): Bells & Whistles</h3>
+
+    <h4>Course Logo</h4>
+
+    <h4>More Inpainting</h4>
+
+    <hr width="100%" size="3">
+
+    <h2>Part B: Diffusion Models from Scratch!</h2>
+
+    h3>Overview</h3>
+    <p>In the second half of this project, I implemented and trained my own diffusion model on MNIST.</p>
+    <hr width="100%" size="2">
+
+    <h2>Part 1: Training a Single-Step Denoising UNet</h2>
+
+    <h3>1.1 Implementing the UNet</h3>
+
+    <p>We utilized</p>
+    
 
 </body>
 </html>
