@@ -135,7 +135,10 @@
         </figure>
     </div>
 
-    <img src="imgs/campanile.png" alt="image">
+    <figure>
+        <img src="imgs/campanile.png" alt="image">
+        <figcaption>Original Campanile Image</figcaption>
+    </figure>
 
     <h3>1.5 Diffusion Model Sampling</h3>
 
@@ -159,9 +162,74 @@
 
     <p>Here are edits of two more of my own test images, using the same procedure.</p>
 
+    <figure>
+        <img src="imgs/1dot7_flint.png" alt="image">
+        <figcaption>My favorite cartoon character, Flint Lockwood</figcaption>
+    </figure>
+
+    <figure>
+        <img src="imgs/1dot7_barry.png" alt="image">
+        <figcaption>And his buddy, Barry</figcaption>
+    </figure>
+
     <h4>1.7.1 Editing Hand-Drawn and Web Images/h4>
 
+    <p>This procedure works particularly well if we start with a nonrealistic image (e.g. painting, a sketch, some scribbles) and project it onto the natural image manifold. For this, I found one image from the web + hand drew two images to edit using the above method for noise levels [1, 3, 5, 7, 10, 20].</p>
+
+    <figure>
+        <img src="imgs/1dot7CAT.png" alt="image">
+        <figcaption>Web Image of a Cat</figcaption>
+    </figure>
+    <figure>
+        <img src="imgs/onedot7TWO.png" alt="image">
+        <figcaption>Hand Drawn Image of a Girl</figcaption>
+    </figure>
+    <figure>
+        <img src="imgs/1dot7ONE_1.png" alt="image">
+        <figcaption>Hand Drawn Image of a Monitor Setup</figcaption>
+    </figure>
+
     <h4>1.7.2 Inpainting</h4>
+
+    <p>We can use the same procedure to implement inpainting. Given an original image and a binary mask <b>m</b>, we can create a new image that has the same content where <b>m</b> is 0, but new content wherever <b>m</b> is 1.</p>
+
+    <figure>
+        <img src="imgs/campanile_mask.png" alt="image">
+        <figcaption>We will inpaint the top of the campanile.</figcaption>
+    </figure>
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/172_campanile1.png" alt="snow">
+        </figure>
+        <figure>
+            <img src="imgs/172_campanile2.png" alt="man">
+        </figure>
+        <figure>
+            <img src="imgs/172_campanile3.png" alt="man">
+        </figure>
+    </div>
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/football_mask.png" alt="snow">
+            <figcaption>We can also inpaint the football here!</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/weird_football.png" alt="man">
+        </figure>
+    </div>
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/flint_mask.png" alt="snow">
+            <figcaption>And here's Flint again.</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/weird_flint.png" alt="man">
+            <figcaption>It made his head kind of sad.</figcaption>
+        </figure>
+    </div>
 
     <h4>1.7.3 Text-Conditional Image-to-image Translation</h4>
 
