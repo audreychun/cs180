@@ -333,27 +333,131 @@
 
     <h2>Part 1: Training a Single-Step Denoising UNet</h2>
 
+    <p>I initially built a simple one-step denoiser that when given a noisy image z, maps it to a clean image x.</p>
+
     <h3>1.1 Implementing the UNet</h3>
 
-    <img src="imgs/PT2_1dot2.png" alt="image">
+    <p>The denoiser is implemented as a UNet, which consists of a few downsampling and upsampling blocks with skip connections.</p>
 
-    <h3>1.2.2 Training</h3>
-    <img src="imgs/1dot2dot1_traininglosscurve.png" alt="image">
+    <h3>1.2 Using the UNet to Train a Denoiser</h3>
+        
+    <p>The denoiser is implemented as a UNet, which consists of a few downsampling and upsampling blocks with skip connections. First, we need to generate training data pairs of (<i>x</i>,<i>x</i>), where each <i>x</i> is a clean MNIST digit. Here, I've visualized the different noising processes over σ = [0.0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0], with <i>x</i> being normalized.</p>
+
+    <figure>
+        <img src="imgs/PT2_1dot2.png" alt="image">
+        <figcaption>Varying levels of noise on MNIST digits</figcaption>
+    </figure>
+
+    <h3>1.2.1 Training</h3>
+        
+    <p>Now, we will train the model to perform denoising.</p>
+
+    <figure>
+        <img src="imgs/1dot2dot1_traininglosscurve.png" alt="image">
+        <figcaption>Training Loss Curve</figcaption>
+    </figure>
+
+    <p>Let's visualize denoised results on the test set at the end of training. Here are some sample results after the 1st and 5th epoch.</p>
 
     <figure>
         <img src="imgs/1dot2dot1_epoch1.png" alt="image">
-        <figcaption>Figure 5: Results on digits from the test set after 1 epoch of training</figcaption>
+        <figcaption>Results on digits from the test set after 1 epoch of training</figcaption>
     </figure>
         
     <figure>
         <img src="imgs/1dot2dot1_epoch5.png" alt="image">
-        <figcaption>Figure 6: Results on digits from the test set after 5 epochs of training</figcaption>
+        <figcaption>Results on digits from the test set after 5 epochs of training</figcaption>
     </figure>
 
-    <h2>Part 1: Training a Single-Step Denoising UNet</h2>
+    <h3>1.2.2 Out-of-Distribution Testing</h3>
+        
+    <p>Our denoiser was trained on MNIST digits noised with σ. Let's see how the denoiser performs on different σ's that it wasn't trained for! Here, I've visualized the denoiser results on test set digits with varying levels of noise σ = [0.0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0]</p>
 
-    <h3>1.1 Implementing the UNet</h3>
-    
+    <figure>
+        <img src="imgs/1dot2dot2.png" alt="image">
+        <figcaption>Results on digits from the test set with varying noise levels.</figcaption>
+    </figure>
+
+    <h2>Part 2: Training a Diffusion Model</h2>
+
+    <p>Now, we are ready for diffusion, where we will train a UNet model that can iteratively denoise an image! I implemented <a href="https://arxiv.org/abs/2006.11239">DDPM</a> (Denoising Diffusion Probabilistic Models) in this part. This involved changing the UNet from Part 1 to predict the added noise ε instead of the clean image <i>x</i>.</p>
+
+    <h3>2.1 Adding Time Conditioning to UNet</h3>
+
+    <p>We needed to inject scalar <i>t</i> into our UNet model to condition it. To do this, I used FCBlocks (fully-connected blocks) to inject the conditioning signal into the UNet.</p>
+
+    <h3>2.2 Training the UNet</h3>
+
+    <p>To train the time-conditioned UNet, I wrote code to pick a random image from the training set, a random <i>t</i>, and trained the denoiser to predict the noise in the random image after adding <i>t</i> amount of noise. This process is repeated for different images and different <i>t</i> values until the model converges!</p>
+
+    <figure>
+        <img src="imgs/" alt="image">
+        <figcaption>Time-Conditioned UNet training loss curve</figcaption>
+    </figure>
+
+    <h3>2.2 Training the UNet</h3>
+
+    <p>To train the time-conditioned UNet, I wrote code to pick a random image from the training set, a random <i>t</i>, and trained the denoiser to predict the noise in the random image after adding <i>t</i> amount of noise. This process is repeated for different images and different <i>t</i> values until the model converges!</p>
+
+    <figure>
+        <img src="imgs/2dot3_trainloss.png" alt="image">
+        <figcaption>Time-Conditioned UNet training loss curve</figcaption>
+    </figure>
+
+    <h3>2.3 Sampling from the UNet</h3>
+
+    <p>The sampling process is very similar to part A, except we can use our list β instead of predicting the variance like in the DeepFloyd model.</p>
+
+    <figure>
+        <img src="imgs/2dot3_epoch5.png" alt="image">
+        <figcaption>Sampling results for the time-conditioned UNet for 5 epochs</figcaption>
+    </figure>
+
+    <figure>
+        <img src="imgs/2dot3_epoch20.png" alt="image">
+        <figcaption>Sampling results for the time-conditioned UNet for 20 epochs</figcaption>
+    </figure>
+
+    h3>2.4 Adding Class-Conditioning to UNet</h3>
+
+    <p>To make results better and to have more control for image generation, we can also optionally condition our UNet on the class of the digit 0-9. Training for this section will be the same as time-only, with the only difference being adding a conditioning vector <i>c</i> and doing unconditional generation periodically.</p>
+
+     <figure>
+        <img src="imgs/TODO.png" alt="image">
+        <figcaption>Class-Conditioned UNet training loss curve</figcaption>
+    </figure>
+
+    h3>2.5 Sampling from the Class-Conditioned UNet</h3>
+
+    <p>The sampling process is also very similar to part A. I used classifier-free guidance with 
+γ = 5.0 for this part.</p>
+
+    <figure>
+        <img src="imgs/TODO.png" alt="image">
+        <figcaption>Sampling results for the time-conditioned UNet for 5 epochs</figcaption>
+    </figure>
+
+    <figure>
+        <img src="imgs/TODO.png" alt="image">
+        <figcaption>Sampling results for the time-conditioned UNet for 20 epochs</figcaption>
+    </figure>
+
+
+
+
+
+        
+
+    <figure>
+        <img src="imgs/" alt="image">
+        <figcaption>CAPTION</figcaption>
+    </figure>
+
+
+
+
+
+        
 
 </body>
 </html>
