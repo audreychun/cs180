@@ -418,7 +418,7 @@
         <figcaption>Sampling results for the time-conditioned UNet for 20 epochs</figcaption>
     </figure>
 
-    h3>2.4 Adding Class-Conditioning to UNet</h3>
+    <h3>2.4 Adding Class-Conditioning to UNet</h3>
 
     <p>To make results better and to have more control for image generation, we can also optionally condition our UNet on the class of the digit 0-9. Training for this section will be the same as time-only, with the only difference being adding a conditioning vector <i>c</i> and doing unconditional generation periodically.</p>
 
@@ -427,7 +427,7 @@
         <figcaption>Class-Conditioned UNet training loss curve</figcaption>
     </figure>
 
-    h3>2.5 Sampling from the Class-Conditioned UNet</h3>
+    <h3>2.5 Sampling from the Class-Conditioned UNet</h3>
 
     <p>The sampling process is also very similar to part A. I used classifier-free guidance with 
 γ = 5.0 for this part.</p>
