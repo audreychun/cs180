@@ -33,28 +33,52 @@
             margin: 30px 0;
         }
     </style>
+    </style>
+    <!-- MathJax script for rendering equations -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
     <h1>Final Project 1: High Dynamic Range</h1>
     <hr width="100%" size="2">
-    <h2>Base Images</h2>
-    <p>In this project, I implemented and deployed diffusion models for image generation.</p>
+
+    <h2>Overview</h2>
     
-    <hr width="100%" size="2">
+    <p>The real world is in high dynamic range (HDR), which cannot be fully captured by modern cameras. However, we can combine information from multiple exposures of the same scene into a single high dynamic range radiance map, then use tone mapping to nicely display this map.</p>
+    <p>Disclosure: I use starter code from <a href="https://classroom.github.com/a/u16GNLqv">Brown's CS 1290</a> GitHub classroom.</p>
+    
+    <h2>Base Images</h2>
+    <p>Here is an example sequence of base images taken at different exposures, depicting a bonsai tree.</p>
+    <img src="imgs/bonsai_exposures.png" alt="image">
+    
     <h2>Radiance Map Construction</h2>
+    <p>First, we need to build a HDR radiance map from several LDR exposures. Based on the logic in Sections 2.1 and 2.2 in <a href="http://www.pauldebevec.com/Research/HDR/debevec-siggraph97.pdf">Debevec and Malik 1997</a></p>, I wrote a function to solve for <p>\( g = \ln(f^{-1}) \)</p>, which maps pixel values (0 to 255) to the log of exposure values. This involves solving the least-squares algorithm to estimate g and unknown log radiance values for each pixel. 
+    
+    <p>Setting λ=50 (smoothing) gives us these results for the bonsai images:</p>
+    <img src="imgs/mapped_bonsai.png" alt="image">
+    
+    <p>Now that we have estimated <code>g</code>, Equation 6 in Debevec outlines how to weight the contribution of each pixel:</p>
+    <img src="imgs/radiance.png" alt="image">
 
-    <p>In the notebook, we instantiate DeepFloyd's stage_1 and stage_2 objects used for generation, as well as several text prompts for sample generation.</p>
+    <p>The estimated radiance map for the bonsai tree is shown below.</p>
+    <img src="imgs/bonsai_hdr_rad_map.png" alt="image">
 
-    <hr width="100%" size="2">
     <h2>Tone Mapping</h2>
 
     <h3>Simple Global Tone Mapping</h3>
     
-    <p>For the 3 text prompts that we provide, display the caption and the output of the model. Reflect on the quality of the outputs and their relationships to the text prompts. Make sure to try at least 2 different num_inference_steps values.
-    Report the random seed that you're using here. You should use the same seed all subsequent parts.</p>
+    <p>Let's get this radiance map to a nice visual image by using tone mapping. First, I tried a very simple global tone mapping. This entailed applying a pixel-wise transform:</p>
+    <p>$$E'_i = \frac{E_i}{1 + E_i}$$</p>
+    <p>then applying global scaling by subtracting the minimum value and rescaling the resulting values to lie within [0,1].</p>
 
     <h3>Durand Tone Mapping</h3>
+
+    <p>For a more precise local tone mapping, I implemented a simplified version of <a href="http://people.csail.mit.edu/fredo/PUBLI/Siggraph2002/DurandBilateral.pdf">Durand 2002</a>. In short, this method first computes global intensity by averaging intensity across all color channels,  and scales colors by this intensity value. The log intensity is bilaterally filtered to get base and detail layers.</p>
+
+    <h3>Tone Mapping Results</h3>
+    <p>Here are results for the given arch, bonsai, chapel, gatrage, garden, house, mug, and window images. Global simple mapping is shown on the <b>left</b>, while Durand mapping is displayed on the <b>right</b>.</p>
     
     <hr width="100%" size="2">
     <h2>Bells & Whistles</h2>
