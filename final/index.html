@@ -78,7 +78,16 @@
     <p>For a more precise local tone mapping, I implemented a simplified version of <a href="http://people.csail.mit.edu/fredo/PUBLI/Siggraph2002/DurandBilateral.pdf">Durand 2002</a>. In short, this method first computes global intensity by averaging intensity across all color channels,  and scales colors by this intensity value. The log intensity is bilaterally filtered to get base and detail layers.</p>
 
     <h3>Tone Mapping Results</h3>
-    <p>Here are results for the given arch, bonsai, chapel, gatrage, garden, house, mug, and window images. Global simple mapping is shown on the <b>left</b>, while Durand mapping is displayed on the <b>right</b>.</p>
+    <p>Here are results for the given arch, bonsai, chapel, garage, garden, house, mug, and window images. Global simple mapping is shown on the <b>left</b>, while Durand mapping is displayed on the <b>right</b>. For Durand, a gamma value of 0.7 worked best for most images (I used 0.5 for the arch and house).</p>
+
+    <img src="imgs/mapped_arch_gamma0dot5.png" alt="image">
+    <img src="imgs/mapped_bonsai_gamma0dot7.png" alt="image">
+    <img src="imgs/mapped_chapel_gamma0dot7.png" alt="image">
+    <img src="imgs/mapped_garage_gamma0dot7.png" alt="image">
+    <img src="imgs/mapped_garden_gamma0dot7.png" alt="image">
+    <img src="imgs/mapped_house_gamma0dot5.png" alt="image">
+    <img src="imgs/mapped_mug_gamma0dot7.png" alt="image">
+    <img src="imgs/mapped_window_gamma0dot7.png" alt="image">
     
     <hr width="100%" size="2">
     <h2>Bells & Whistles</h2>
