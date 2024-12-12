@@ -60,7 +60,8 @@
     <img src="imgs/mapped_bonsai.png" alt="image">
     
     <p>Now that we have estimated <code>g</code>, Equation 6 in Debevec outlines how to weight the contribution of each pixel:</p>
-    <img src="imgs/radiance.png" alt="image">
+    <p>$$\ln E_i = \frac{\sum_{j=1}^P w(Z_{ij}) \left(g(Z_{ij}) - \ln \Delta t_j \right)}{\sum_{j=1}^P w(Z_{ij})}
+$$</p>
 
     <p>The estimated radiance map for the bonsai tree is shown below.</p>
     <img src="imgs/bonsai_hdr_rad_map.png" alt="image">
