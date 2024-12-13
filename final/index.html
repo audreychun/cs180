@@ -54,7 +54,7 @@
     <img src="imgs/bonsai_exposures.png" alt="image">
     
     <h2>Radiance Map Construction</h2>
-    <p>First, we need to build a HDR radiance map from several LDR exposures. Based on the logic in Sections 2.1 and 2.2 in <a href="http://www.pauldebevec.com/Research/HDR/debevec-siggraph97.pdf">Debevec and Malik 1997</a></p>, I wrote a function to solve for <p>\( g = \ln(f^{-1}) \)</p>, which maps pixel values (0 to 255) to the log of exposure values. This involves solving the least-squares algorithm to estimate g and unknown log radiance values for each pixel. 
+    <p>First, we need to build a HDR radiance map from several LDR exposures. Based on the logic in Sections 2.1 and 2.2 in <a href="http://www.pauldebevec.com/Research/HDR/debevec-siggraph97.pdf">Debevec and Malik 1997</a>, I wrote a function to solve for \( g = \ln(f^{-1}) \), which maps pixel values (0 to 255) to the log of exposure values. This involves solving the least-squares algorithm to estimate g and unknown log radiance values for each pixel.</p>
     
     <p>Setting λ=50 (smoothing) gives us these results for the bonsai images:</p>
     <img src="imgs/mapped_bonsai.png" alt="image">
@@ -93,15 +93,51 @@ $$</p>
     <hr width="100%" size="2">
     <h2>Bells & Whistles</h2>
 
-
+    <p>Here, I tested out the radiance map and the tone mapping on my own HDR images! It worked pretty well.</p>
     
+    <figure>
+        <img src="imgs/PT1_deltat_classroom.png" alt="image">
+        <figcaption>Different exposures of a classroom in McCone.</figcaption>
+    </figure>
+    
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/PT1_solveg_classroom" alt="image">
+            <figcaption>Log exposures of each RGB channel</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/PT1_tonemapped_classroom.png" alt="image">
+            <figcaption>Simple global mapping (left), Durand mapping (right)</figcaption>
+        </figure>
+    </div>
+
+    <figure>
+        <img src="imgs/PT1_deltat_mccone.png" alt="image">
+        <figcaption>Different exposures of a window in McCone.</figcaption>
+    </figure>
+    
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/PT1_solveg_mccone" alt="image">
+            <figcaption>Log exposures of each RGB channel</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/PT1_tonemapped_mccone.png" alt="image">
+            <figcaption>Simple global mapping (left), Durand mapping (right)</figcaption>
+        </figure>
+    </div>
+
+    <hr width="100%" size="2">
+    <h2>Summary</h2>
+
+    <p>I always wondered what HDR was due to taking pictures on my iPhone and also having that option enabled on my camera. I usually just turned it off while editing, but this project helped me finally understand how different exposures can be combined to capture details in both lighter and darker areas of a scene.</p>
+
     <hr style="border: 2px dashed gray; background-color: transparent;">
 
     <h1>Final Project 2: Lightfield Camera</h1>
     <hr width="100%" size="2">
-    <h2>Overview<h2>
+    <h2>Overview</h2>
     <p>This project uses real lightfield data to mimick the depth focusing and aperture changes of a camera. Let's use the bracelet and lego images from the <a href="http://lightfield.stanford.edu/lfs.html">Stanford Light Field Archive</a>.</p>
-
     <p>If we take the average of all the images for each object/scene, the farther away pixels are clear while the closer up ones are blurry. This is because those change a lot more from image to image.</p>
 
     <div class="image-grid">
@@ -152,6 +188,38 @@ $$</p>
     
     <hr width="100%" size="2">
     <h2>Bells & Whistles : Iterative Refocusing</h2>
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/200_600_iterative refocus.png" alt="image">
+            <figcaption>Bracelet, <i>r</i> values ranging from 0 to 20</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/250_100_iterative_refocus" alt="image">
+            <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
+        </figure>
+    </div>
+
+    <hr width="100%" size="2">
+    <h2>Bells & Whistles : Testing on my Own Images</h2>
+
+    <img src="imgs/whiteboard_grid.png" alt="image">
+    <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/average_whiteboard.png" alt="image">
+            <figcaption>Bracelet, <i>r</i> values ranging from 0 to 20</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/neg40shiftwhiteboard.png" alt="image">
+            <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/pos40shiftwhiteboard.png" alt="image">
+            <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
+        </figure>
+    </div>
 
 
 </body>
