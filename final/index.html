@@ -99,22 +99,59 @@ $$</p>
 
     <h1>Final Project 2: Lightfield Camera</h1>
     <hr width="100%" size="2">
+    <h2>Overview<h2>
+    <p>This project uses real lightfield data to mimick the depth focusing and aperture changes of a camera. Let's use the bracelet and lego images from the <a href="http://lightfield.stanford.edu/lfs.html">Stanford Light Field Archive</a>.</p>
+
+    <p>If we take the average of all the images for each object/scene, the farther away pixels are clear while the closer up ones are blurry. This is because those change a lot more from image to image.</p>
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/average_bracelet.png" alt="image">
+            <figcaption>Average Bracelet Image</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/average_legos.png" alt="image">
+            <figcaption>Average Lego Image</figcaption>
+        </figure>
+    </div>
+        
     <h2>1) Depth Refocusing</h2>
-    <p>In this project, I implemented and deployed diffusion models for image generation.</p>
-    
+    <p>Here, we will mimick depth refocusing by shifting images with respect to the center image (image with coordinates (8, 8) on the (17, 17) grid). This information is found in the filename of each image. The amount of shift is scaled by the parameter 𝐶, which results in the average image (add and normalize all the shifted images) being blurred and focused in different areas of the image.</p>
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/bracelet.gif" alt="image">
+            <figcaption>Bracelet, 𝐶 values ranging from -4.5 to 1.5</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/legos.gif" alt="image">
+            <figcaption>Legos, 𝐶 values ranging from -4.0 to 4.0</figcaption>
+        </figure>
+    </div>
+        
     <hr width="100%" size="2">
     <h2>2) Aperture Adjustment</h2>
 
-    <p>In the notebook, we instantiate DeepFloyd's stage_1 and stage_2 objects used for generation, as well as several text prompts for sample generation.</p>
+    <p>We can simulate another cool feature - aperture size adjustment. A larger aperture is mimicked by averaging a large number of images sampled over the grid perpendicular to the optical axis, while a smaller aperture is mimicked by using fewer images. We choose which images are used based on the aperture radius <i>r</i>, and get a centered square of indices from a 17 by 17 matrix of images.</p>
+
+    <div class="image-grid">
+        <figure>
+            <img src="imgs/bracelet_blur.gif" alt="image">
+            <figcaption>Bracelet, <i>r</i> values ranging from 0 to 20</figcaption>
+        </figure>
+        <figure>
+            <img src="imgs/legos_blur.gif" alt="image">
+            <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
+        </figure>
+    </div>
 
     <hr width="100%" size="2">
     <h2>Summary</h2>
     
-    <p>For the 3 text prompts that we provide, display the caption and the output of the model. Reflect on the quality of the outputs and their relationships to the text prompts. Make sure to try at least 2 different num_inference_steps values.
-    Report the random seed that you're using here. You should use the same seed all subsequent parts.</p>
+    <p>I think this is a really cool camera function - it's neat how seemingly complex physical and mechanical tasks like focusing and blurring can be so easily simulated by simple shifting and averaging operations.</p>
     
     <hr width="100%" size="2">
-    <h2>Bells & Whistles</h2>
+    <h2>Bells & Whistles : Iterative Refocusing</h2>
 
 
 </body>
