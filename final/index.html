@@ -166,7 +166,9 @@ $$</p>
             <figcaption>Legos, 𝐶 values ranging from -4.0 to 4.0</figcaption>
         </figure>
     </div>
-        
+
+    <p>You can see in the bracelet photo that different portions become clear and then blurred as the 𝐶 value changes. This is because the bracelet in real life is laid out in a snake pattern where pieces are closer to the lightfield camera in front and pieces are farther in the back, creating a great example of mimicking depth refocusing. For the legos, the focus changes from the very front of the picture (the lego ground) to the subjects of the photo (the lego men), and then lastly to the back wall as 𝐶 increases.</p>
+    
     <hr width="100%" size="2">
     <h2>2) Aperture Adjustment</h2>
 
@@ -182,48 +184,58 @@ $$</p>
             <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
         </figure>
     </div>
+
+    <p>For the bracelet, the change is most apparent in the front - as more images are included as <i>r</i> increases, the more variance there is in closer-up pixels. For the lego men, you can see that the blur becomes more global, as opposed to shifting locally in the image like in the prior section.</p>
     
     <hr width="100%" size="2">
     <h2>Bells & Whistles : Iterative Refocusing</h2>
 
+    <p>Here, I implemented iterative refocusing. This method allows us to choose coordinates of the image we'd like to focus on, and then use a simple search procedure to find which depth value is best to scale the image shifts by in order to best align and focus on the chosen point. I chose normalized cross-correlation (from Project 1) to use as my similarity metric, which worked well. Two examples are shown below with the bracelet image. The red dot marks the input focus point.</p>
+
     <div class="image-grid">
         <figure>
             <img src="imgs/200_600_iterative refocus.png" alt="image">
-            <figcaption>Bracelet, <i>r</i> values ranging from 0 to 20</figcaption>
+            <figcaption>Focus point = (200, 600)</figcaption>
         </figure>
         <figure>
             <img src="imgs/250_100_iterative_refocus.png" alt="image">
-            <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
+            <figcaption>Focus point = (250, 100)</figcaption>
         </figure>
     </div>
 
     <hr width="100%" size="2">
     <h2>Bells & Whistles : Testing on my Own Images</h2>
 
+    <p>This B&W prompt to test the lightfield methods on your own photos seemed like kind of a trick question, as a regular camera cannot capture the directional information of light rays like a lightfield camera does. However, I attempted to mimick (very broadly) how a lightfield camera might work by taking a 3x3 grid of images:</p>
+
     <img src="imgs/whiteboard_grid.png" alt="image">
-    <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
+    <figcaption>A whiteboard in Cory Hall.</figcaption>
+
+    <p>This B&W prompt to test the lightfield methods on your own photos seemed like kind of a trick question, as a regular camera cannot capture the directional information of light rays like a lightfield camera does. However, I attempted to mimick (very broadly) how a lightfield camera might work by taking a 3x3 grid of images:</p>
 
     <div class="image-grid">
         <figure>
             <img src="imgs/average_whiteboard.png" alt="image">
-            <figcaption>Bracelet, <i>r</i> values ranging from 0 to 20</figcaption>
+            <figcaption>Average whiteboard image</figcaption>
         </figure>
         <figure>
             <img src="imgs/neg40shiftwhiteboard.png" alt="image">
-            <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
+            <figcaption>Depth refocusing with a 𝐶 value of -40</figcaption>
         </figure>
         <figure>
             <img src="imgs/pos40shiftwhiteboard.png" alt="image">
-            <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
+            <figcaption>Depth refocusing with a 𝐶 value of +40</figcaption>
         </figure>
     </div>
 
+    <p>Although this <i>could</i> theoretically work with a much more stable camera and grid of images, in short, you can't really refocus or mimick aperture adjustments after having taken the photo(s). The reason a lightfield camera is cool is because you can computationally change focus and blur due to capturing the additional directional data of light.</p>
     
     <hr width="100%" size="2">
     <h2>Summary</h2>
     
-    <p>I think this is a really cool camera function - it's neat how seemingly complex physical and mechanical tasks like focusing and blurring can be so easily simulated by simple shifting and averaging operations.</p>
-
+    <p>I think this is a really cool camera concept - it's neat how seemingly complex physical and mechanical tasks like focusing and blurring can be easily simulated by simple shifting and averaging operations.</p> 
+    
+    <p>Thanks for reading & grading!</p>
 
 </body>
 </html>
