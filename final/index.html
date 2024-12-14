@@ -58,6 +58,9 @@
     
     <p>Setting λ=50 (smoothing) gives us these results for the bonsai images:</p>
     <img src="imgs/mapped_bonsai.png" alt="image">
+
+    <p>And here are RGB curves plotting the estimated g that we have solved for in our <code>solve_g</code> function:</p>
+    <img src="imgs/gcurves.png" alt="image">
     
     <p>Now that we have estimated <code>g</code>, Equation 6 in Debevec outlines how to weight the contribution of each pixel:</p>
     <p>$$\ln E_i = \frac{\sum_{j=1}^P w(Z_{ij}) \left(g(Z_{ij}) - \ln \Delta t_j \right)}{\sum_{j=1}^P w(Z_{ij})}
@@ -89,16 +92,15 @@ $$</p>
     <img src="imgs/mapped_house_gamma0dot5.png" alt="image">
     <img src="imgs/mapped_mug_gamma0dot7.png" alt="image">
     <img src="imgs/mapped_window_gamma0dot7.png" alt="image">
+
+    <p>The simple global scaling isn't great at capturing details, although it is better at having higher constrasts in most of the pictures. The Durand scaling preserves a lot more detail in more regions of the images, but this often results in more monotone-looking pictures.</p>
     
     <hr width="100%" size="2">
     <h2>Bells & Whistles</h2>
 
-    <p>Here, I tested out the radiance map and the tone mapping on my own HDR images! It worked pretty well.</p>
+    <p>Here, I tested out the radiance map and the tone mapping on my own HDR images! It worked pretty well. Here are different exposures of a classroom in McCone:</p>
     
-    <figure>
-        <img src="imgs/PT1_deltat_classroom.png" alt="image">
-        <figcaption>Different exposures of a classroom in McCone.</figcaption>
-    </figure>
+    <img src="imgs/PT1_deltat_classroom.png" alt="image">
     
     <div class="image-grid">
         <figure>
@@ -111,10 +113,9 @@ $$</p>
         </figure>
     </div>
 
-    <figure>
-        <img src="imgs/PT1_deltat_mccone.png" alt="image">
-        <figcaption>Different exposures of a window in McCone.</figcaption>
-    </figure>
+    <p>And also different exposures of a window in McCone.</p>
+
+    <img src="imgs/PT1_deltat_mccone.png" alt="image">
     
     <div class="image-grid">
         <figure>
@@ -130,15 +131,15 @@ $$</p>
     <hr width="100%" size="2">
     <h2>Summary</h2>
 
-    <p>I always wondered what HDR was due to taking pictures on my iPhone and also having that option enabled on my camera. I usually just turned it off while editing, but this project helped me finally understand how different exposures can be combined to capture details in both lighter and darker areas of a scene.</p>
+    <p>This project helped me understand how different exposures can be combined to capture details in both lighter and darker areas of a scene. I always wondered what HDR was, due to having that option enabled on my camera as well as taking iPhone pictures. Maybe I can now use it to my advantage when capturing and editing!</p>
 
     <hr style="border: 2px dashed gray; background-color: transparent;">
 
     <h1>Final Project 2: Lightfield Camera</h1>
     <hr width="100%" size="2">
     <h2>Overview</h2>
-    <p>This project uses real lightfield data to mimick the depth focusing and aperture changes of a camera. Let's use the bracelet and lego images from the <a href="http://lightfield.stanford.edu/lfs.html">Stanford Light Field Archive</a>.</p>
-    <p>If we take the average of all the images for each object/scene, the farther away pixels are clear while the closer up ones are blurry. This is because those change a lot more from image to image.</p>
+    <p>This project uses real lightfield data to mimick the depth focusing and aperture changes of a camera. I chose the bracelet and lego images from the <a href="http://lightfield.stanford.edu/lfs.html">Stanford Light Field Archive</a> to demonstrate these operations.</p>
+    <p>First, we can see that if we take the average of all the images for each object/scene - far away pixels are clear while close-up ones are blurry. This is because close-up regions change a lot more from image to image.</p>
 
     <div class="image-grid">
         <figure>
@@ -150,9 +151,10 @@ $$</p>
             <figcaption>Average Lego Image</figcaption>
         </figure>
     </div>
-        
+    
+    <hr width="100%" size="2">        
     <h2>1) Depth Refocusing</h2>
-    <p>Here, we will mimick depth refocusing by shifting images with respect to the center image (image with coordinates (8, 8) on the (17, 17) grid). This information is found in the filename of each image. The amount of shift is scaled by the parameter 𝐶, which results in the average image (add and normalize all the shifted images) being blurred and focused in different areas of the image.</p>
+    <p>Here, we will mimick depth refocusing by shifting images with respect to the center image (image with coordinates (8, 8) on the (17, 17) grid). This information is found in the filename of each image. The amount of shift is scaled by the parameter 𝐶, which results in the average image (from adding and normalizing all the shifted images) being blurred and focused in different areas of the image.</p>
 
     <div class="image-grid">
         <figure>
@@ -180,11 +182,6 @@ $$</p>
             <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
         </figure>
     </div>
-
-    <hr width="100%" size="2">
-    <h2>Summary</h2>
-    
-    <p>I think this is a really cool camera function - it's neat how seemingly complex physical and mechanical tasks like focusing and blurring can be so easily simulated by simple shifting and averaging operations.</p>
     
     <hr width="100%" size="2">
     <h2>Bells & Whistles : Iterative Refocusing</h2>
@@ -220,6 +217,12 @@ $$</p>
             <figcaption>Legos, <i>r</i> values ranging from 0 to 20</figcaption>
         </figure>
     </div>
+
+    
+    <hr width="100%" size="2">
+    <h2>Summary</h2>
+    
+    <p>I think this is a really cool camera function - it's neat how seemingly complex physical and mechanical tasks like focusing and blurring can be so easily simulated by simple shifting and averaging operations.</p>
 
 
 </body>
